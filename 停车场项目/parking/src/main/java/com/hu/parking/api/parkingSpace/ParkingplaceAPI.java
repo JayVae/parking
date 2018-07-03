@@ -1,0 +1,110 @@
+package com.hu.parking.api.parkingSpace;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hu.parking.common.Page;
+import com.hu.parking.common.ResultCode;
+import com.hu.parking.entity.Parkinglotslice;
+import com.hu.parking.entity.Parkingplace;
+import com.hu.parking.service.parkingSpace.ParkinglotsliceService;
+import com.hu.parking.service.parkingSpace.ParkingplaceService;
+import com.hu.parking.service.system.RoleService;
+
+@Controller
+@RequestMapping("/api/parkingplace")
+public class ParkingplaceAPI {
+
+	@Autowired
+	ParkingplaceService parkingplaceService;
+
+	@Autowired
+	Parkingplace parkingplace;
+	
+	@Autowired
+	ParkinglotsliceService parkinglotsliceService;
+	
+	@Autowired
+	Parkinglotslice parkinglotslice;
+	
+	
+	
+	/**
+	 * 获取某个停车场所有车位信息
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "/list")
+	@ResponseBody
+	public List<Parkinglotslice> list(String parkinglotid, String approval) {
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("parkinglotid", parkinglotid);
+		paramsMap.put("approval", approval);
+		List<Parkinglotslice> parkinglotsliceList = parkinglotsliceService.findByParams(paramsMap);
+		List<Parkingplace> parkingplaceList = parkingplaceService.findByParams(paramsMap);
+		for (int i = 0; i < parkinglotsliceList.size(); i++) {
+			Parkinglotslice parkinglotslice = parkinglotsliceList.get(i);
+			List<Parkingplace> parkingplaceListNew = new ArrayList<Parkingplace>();
+			for (int j = 0; j < parkingplaceList.size(); j++) {
+				Parkingplace parkingplace = parkingplaceList.get(j);
+				if (parkingplace.getParkinglotsliceid().equals(parkinglotslice.getParkinglotsliceid())) {
+					parkingplaceListNew.add(parkingplace);
+				}
+			}
+			parkinglotslice.setParkingplaceList(parkingplaceListNew);
+		}
+		return parkinglotsliceList;
+	}
+	
+	/**
+	 * 查询用户的车位
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "/user/list")
+	@ResponseBody
+	public List<Parkingplace> orduserparkingplace(String orduserid) {
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("orduserid", orduserid);
+		List<Parkingplace> parkingplaceList = parkingplaceService.findByParams(paramsMap);
+		return parkingplaceList;
+	}
+	
+	/**
+	 * 查询用户的车位及空闲时间
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "/user/freetime/list")
+	@ResponseBody
+	public List<Parkingplace> orduserppfreetime(String orduserid) {
+		Map<String, Object> paramsMap = new HashMap<String, Object>();
+		paramsMap.put("orduserid", orduserid);
+		paramsMap.put("nowdate", new Date());
+		paramsMap.put("sortOrder", "asc");
+		paramsMap.put("sortName", "pf.freetimebucketbegin");
+		List<Parkingplace> parkingplaceList = parkingplaceService.findByNParams(paramsMap);
+		return parkingplaceList;
+	}
+	
+	
+
+	
+	
+	
+}

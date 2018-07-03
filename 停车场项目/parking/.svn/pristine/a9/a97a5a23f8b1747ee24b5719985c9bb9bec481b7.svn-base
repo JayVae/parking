@@ -1,0 +1,111 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Parkingplaceapproval implements Serializable {
+    private Integer parkingplaceapprovalid;
+
+    private Integer parkingplaceid;
+
+    private Integer orduserid;
+
+    private Integer propertyuserid;
+
+    private Integer sysuserid;
+
+    private String approvalstate;
+
+    private String reason;
+
+    private Date applytime;
+
+    private Date approvaltime;
+
+    private String note;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getParkingplaceapprovalid() {
+        return parkingplaceapprovalid;
+    }
+
+    public void setParkingplaceapprovalid(Integer parkingplaceapprovalid) {
+        this.parkingplaceapprovalid = parkingplaceapprovalid;
+    }
+
+    public Integer getParkingplaceid() {
+        return parkingplaceid;
+    }
+
+    public void setParkingplaceid(Integer parkingplaceid) {
+        this.parkingplaceid = parkingplaceid;
+    }
+
+    public Integer getOrduserid() {
+        return orduserid;
+    }
+
+    public void setOrduserid(Integer orduserid) {
+        this.orduserid = orduserid;
+    }
+
+    public Integer getPropertyuserid() {
+        return propertyuserid;
+    }
+
+    public void setPropertyuserid(Integer propertyuserid) {
+        this.propertyuserid = propertyuserid;
+    }
+
+    public Integer getSysuserid() {
+        return sysuserid;
+    }
+
+    public void setSysuserid(Integer sysuserid) {
+        this.sysuserid = sysuserid;
+    }
+
+    public String getApprovalstate() {
+        return approvalstate;
+    }
+
+    public void setApprovalstate(String approvalstate) {
+        this.approvalstate = approvalstate == null ? null : approvalstate.trim();
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason == null ? null : reason.trim();
+    }
+
+    public Date getApplytime() {
+        return applytime;
+    }
+
+    public void setApplytime(Date applytime) {
+        this.applytime = applytime;
+    }
+
+    public Date getApprovaltime() {
+        return approvaltime;
+    }
+
+    public void setApprovaltime(Date approvaltime) {
+        this.approvaltime = approvaltime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+}

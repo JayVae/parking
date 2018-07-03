@@ -1,0 +1,48 @@
+package com.sxkre.jicunyizhan.api.parkingSpace;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.aspectj.weaver.ArrayAnnotationValue;
+import org.junit.Test;
+
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.service.parkingSpace.FreetimebucketService;
+import com.hu.parking.service.parkingSpace.FreetimebuckettmpService;
+import com.hu.parking.service.parkingSpace.impl.FreetimebucketServiceImpl;
+import com.hu.parking.service.parkingSpace.impl.FreetimebuckettmpServiceImpl;
+
+public class FreetimebucketTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+	public static void main(String[] args){
+		Freetimebuckettmp freetimebuckettmp = new Freetimebuckettmp();
+		List<Freetimebucket> freetimebucketList = new ArrayList<Freetimebucket>();
+		
+		freetimebuckettmp.setName("2222dsafsfc");
+		freetimebuckettmp.setOrduserid("");
+		
+		FreetimebucketService freetimebucketService = new FreetimebucketServiceImpl();
+		FreetimebuckettmpService freetimebuckettmpService = new FreetimebuckettmpServiceImpl();
+		Freetimebucket freetimebucket = new Freetimebucket();
+		freetimebucket.setFreetimebucketbegin(new Date());
+		freetimebucket.setFreetimebucketend(new Date());
+		freetimebucket.setPrice(2.6);
+		freetimebucketList.add(freetimebucket);
+		Freetimebucket freetimebucket1 = new Freetimebucket();
+		freetimebucket1.setFreetimebucketbegin(new Date());
+		freetimebucket1.setFreetimebucketend(new Date());
+		freetimebucket1.setPrice(2.9);
+		freetimebucketList.add(freetimebucket1);
+		freetimebuckettmpService.addFreetimebuckettmp(freetimebuckettmp, freetimebucketList);
+		
+	}
+}

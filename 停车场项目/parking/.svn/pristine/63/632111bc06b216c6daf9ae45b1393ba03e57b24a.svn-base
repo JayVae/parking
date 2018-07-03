@@ -1,0 +1,17 @@
+package com.hu.parking.service.parkingSpace;
+
+import java.util.List;
+
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.service.base.BaseService;
+
+public interface FreetimebuckettmpService extends BaseService<Freetimebuckettmp> {
+	/**
+	 * 添加空闲时段模板
+	 * @param freetimebuckettmp
+	 * @param freetimebucketList
+	 * @return
+	 */
+	public int addFreetimebuckettmp(Freetimebuckettmp freetimebuckettmp, List<Freetimebucket> freetimebucketList);
+}

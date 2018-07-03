@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Rentrecord;
+
+public interface RentrecordMapper {
+    int deleteByPrimaryKey(Integer rentrecordid);
+
+    int insert(Rentrecord record);
+
+    int insertSelective(Rentrecord record);
+
+    Rentrecord selectByPrimaryKey(Integer rentrecordid);
+
+    int updateByPrimaryKeySelective(Rentrecord record);
+
+    int updateByPrimaryKey(Rentrecord record);
+}

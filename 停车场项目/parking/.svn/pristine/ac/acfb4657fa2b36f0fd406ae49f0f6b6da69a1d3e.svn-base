@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Parkinglotslice;
+
+public interface ParkinglotsliceMapper {
+    int deleteByPrimaryKey(Integer parkinglotsliceid);
+
+    int insert(Parkinglotslice record);
+
+    int insertSelective(Parkinglotslice record);
+
+    Parkinglotslice selectByPrimaryKey(Integer parkinglotsliceid);
+
+    int updateByPrimaryKeySelective(Parkinglotslice record);
+
+    int updateByPrimaryKey(Parkinglotslice record);
+}

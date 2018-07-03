@@ -1,0 +1,67 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+
+public class Usercoupon implements Serializable {
+    private Integer usercouponid;
+
+    private Integer couponid;
+
+    private Integer orduserid;
+
+    private Integer havenum;
+
+    private Integer residuenum;
+
+    private String isvalide;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getUsercouponid() {
+        return usercouponid;
+    }
+
+    public void setUsercouponid(Integer usercouponid) {
+        this.usercouponid = usercouponid;
+    }
+
+    public Integer getCouponid() {
+        return couponid;
+    }
+
+    public void setCouponid(Integer couponid) {
+        this.couponid = couponid;
+    }
+
+    public Integer getOrduserid() {
+        return orduserid;
+    }
+
+    public void setOrduserid(Integer orduserid) {
+        this.orduserid = orduserid;
+    }
+
+    public Integer getHavenum() {
+        return havenum;
+    }
+
+    public void setHavenum(Integer havenum) {
+        this.havenum = havenum;
+    }
+
+    public Integer getResiduenum() {
+        return residuenum;
+    }
+
+    public void setResiduenum(Integer residuenum) {
+        this.residuenum = residuenum;
+    }
+
+    public String getIsvalide() {
+        return isvalide;
+    }
+
+    public void setIsvalide(String isvalide) {
+        this.isvalide = isvalide == null ? null : isvalide.trim();
+    }
+}

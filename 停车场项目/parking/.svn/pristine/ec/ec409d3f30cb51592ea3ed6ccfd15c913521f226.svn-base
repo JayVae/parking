@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Verifier;
+
+public interface VerifierMapper {
+    int deleteByPrimaryKey(Integer verifierid);
+
+    int insert(Verifier record);
+
+    int insertSelective(Verifier record);
+
+    Verifier selectByPrimaryKey(Integer verifierid);
+
+    int updateByPrimaryKeySelective(Verifier record);
+
+    int updateByPrimaryKey(Verifier record);
+}

@@ -1,0 +1,15 @@
+package com.hu.parking.service.parkingSpace.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.entity.Parkinglot;
+import com.hu.parking.service.base.BaseServiceImpl;
+import com.hu.parking.service.parkingSpace.FreetimebuckettmpService;
+import com.hu.parking.service.parkingSpace.ParkinglotService;
+
+@Service("freetimebuckettmpService")
+public class FreetimebuckettmpServiceImpl extends BaseServiceImpl<Freetimebuckettmp> implements FreetimebuckettmpService {
+	
+}

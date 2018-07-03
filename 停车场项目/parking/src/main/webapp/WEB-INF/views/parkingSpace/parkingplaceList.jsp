@@ -1,0 +1,137 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>车位列表</title>
+	    	<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/main.css" />">
+			<link rel="stylesheet" type="text/css" href="<c:url value="/static/easyui/themes/default/easyui.css" />">
+			<link rel="stylesheet" type="text/css" href="<c:url value="/static/easyui/themes/icon.css" />">
+			<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/font-awesome-4.2.0/css/font-awesome.min.css" />">
+			<script type="text/javascript" src="<c:url value="/static/easyui/jquery.min.js" />"></script>
+			<script type="text/javascript" src="<c:url value="/static/easyui/jquery.easyui.min.js" />"></script>
+			<script type="text/javascript" src="<c:url value="/static/easyui/locale/easyui-lang-zh_CN.js" />"></script>
+			<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
+			<script type="text/javascript" src="<c:url value="/static/js/validateboxRules.js" />"></script>
+		
+	</head>
+<body>
+	<div style="padding-top:15px; padding-left:5px; padding-right:15px;">			 
+		<div id="parkingplaceSd" class="easyui-panel" title="查询条件" style="height:100px;padding:10px; margin-bottom:10px;" data-options="collapsible:true">
+		     <form action="" id="parkingplaceShForm">            
+		                    停车场：<input  name="parkinglotid" id="parkinglotidOfShForm">
+		                    停车场分层：<input name="parkinglotsliceid" id="parkinglotsliceidOfShForm">
+		       	车位编号：<input name="parkingplaceno" id="parkingplacenoOfShFrom" class="easyui-textbox">            
+	                              状态：<select class="easyui-combobox" name="usestate" data-options="required:true" >
+                    		<option value="0">禁用</option>
+                    		<option value="1" selected>可用</option>
+                    	</select>	           
+	            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchLoad('parkingplaceDg','parkingplaceShForm')">查询</a>
+	         </form> 
+		</div>  
+     	<div id="parkingplaceTb" style="margin-bottom:5px">
+            <a href="#" class="easyui-linkbutton" iconCls="fa fa-plus fa-lg" plain="true" onclick="newParkingplace()">添加</a>
+            <a href="#" class="easyui-linkbutton" iconCls="fa fa-pencil-square-o fa-lg" plain="true" onclick="editParkingplace()">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="fa fa-trash-o fa-lg" plain="true" onclick="destroyParkingplace()">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="fa fa-crosshairs fa-lg" plain="true" onclick="viewParkingplace()">查看</a>
+        </div>      
+        <table id="parkingplaceDg"   title="车位列表"   url="parkingplace/list" method="post" 	    		
+	    		rownumbers="true" fitColumns="true" singleSelect="true" toolbar="#parkingplaceTb"
+	    		sortName="parkingplaceid" sortOrder="asc"  
+	    		pagination="true" pageSize="20" pageList="[10,20,50,100]" striped="true">
+	        <thead>
+	            <tr>	            	
+	            	<th field="parkingplaceid" hidden="true">ID</th>
+	                <th field="parkingplaceno" sortable="true" width="100">车位编号</th>
+	                <th field="parkinglotname" sortable="true" width="100">停车场名称</th>
+	                <th field='slicename' sortable="true" width="100">停车场分层</th>
+	                <th field='positionofmap' sortable="true" width="100">在地图的位置</th>
+	                <th field='realname' sortable="true" width="100">业主姓名</th>
+	                <th field='regtime' sortable="true" width="100">注册时间</th>
+	                <th field='usestate' sortable="true" formatter="parkingplaceStateFmt" width="100">使用状态</th>
+	                <th field='orduserid' hidden="true" ></th>
+	                <th field='parkinglotsliceid' hidden="true" ></th>
+	            </tr>
+	        </thead>
+	    </table>
+	    <div id="parkingplaceDlg" class="easyui-dialog" style="width:400px;height:500px;padding:10px 20px"
+            closed="true" collapsible="true" minimizable="true" maximizable="true" resizable ="true"
+             buttons="#parkingplaceDlg-buttons" >
+         </div>
+	    <div id="parkingplaceDlg-buttons">
+	        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveParkingplace()" style="width:90px" id="parkingplaceSave">保存</a>
+	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#parkingplaceDlg').dialog('close')" style="width:90px">取消</a>
+	    </div>
+	</div>   
+	<script type="text/javascript">	
+			function parkingplaceSexFmt(value, row, index){
+				if (value == 0){  
+	                 return '女';  
+	             } else {  
+	                 return '男';  
+	             }
+			}
+			function parkingplaceStateFmt(value, row, index){
+				if (value == 0){  
+	                 return '<div class="div-state-off">禁用</div>';  
+	             } else {  
+	                 return '<div class="div-state-on">可用</div>';  
+	             }
+			}
+			
+			$('#parkinglotidOfShForm').combobox({    
+	            url:'parkinglot/parkinglots',    
+	            valueField:'parkinglotid',    
+	            textField:'parkinglotname' ,
+	            onSelect: function (record) {
+	            	var url='parkinglot/slice/list?parkinglotid=' + record.parkinglotid;
+	            	$('#parkinglotsliceidOfShForm').combobox('clear');
+	                $('#parkinglotsliceidOfShForm').combobox('reload', url);
+	            }
+	        });
+	        $('#parkinglotsliceidOfShForm').combobox({
+                valueField: 'parkinglotsliceid',
+                textField: 'slicename'
+            });
+			
+			//dg在初始化时加入查询条件
+			$('#parkingplaceDg').datagrid({
+				queryParams: dgParams('parkingplaceShForm')
+			});		
+
+			var parkingplaceOptUrl;
+			//添加
+		    function newParkingplace(){
+		    	$('#parkingplaceSave').show();	       	       
+		    	newHrefObj('parkingplaceDlg','<c:url value="/parkingplace/info?opt=add" />','添加车位','parkingplaceInfoForm');
+		        parkingplaceOptUrl = "parkingplace/insert";
+		    }
+		    function editParkingplace(){
+		    	$('#parkingplaceSave').show();
+		    	var parkingplaceDgRow =getSelectRow('parkingplaceDg');
+		    	if(parkingplaceDgRow){
+		    		openHrefLoadDlg('parkingplaceDlg','<c:url value="/parkingplace/info?opt=edit" />','编辑车位','parkingplaceInfoForm',parkingplaceDgRow);
+		    	}		    	
+		    	parkingplaceOptUrl = "parkingplace/update"
+		    }
+		    
+		    function viewParkingplace(){
+		    	$('#parkingplaceSave').hide();
+		    	var parkingplaceDgRow =getSelectRow('parkingplaceDg');
+		    	if(parkingplaceDgRow){
+		    		openHrefLoadDlg('parkingplaceDlg','<c:url value="/parkingplace/info?opt=edit" />','编辑车位','parkingplaceInfoForm',parkingplaceDgRow);
+		    	}
+		    }
+		    
+		    function saveParkingplace(){
+		    	saveObj('parkingplaceDg', 'parkingplaceDlg', 'parkingplaceInfoForm', parkingplaceOptUrl);
+		    }
+		    
+		    function destroyParkingplace() {
+		    	destroyObj('parkingplaceDg','parkingplace/'+getSelectRow('parkingplaceDg').parkingplaceid+'/delete');			
+			}
+			
+	</script> 
+</body>
+</html>

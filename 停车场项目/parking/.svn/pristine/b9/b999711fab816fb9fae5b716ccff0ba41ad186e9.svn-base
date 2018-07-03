@@ -1,0 +1,39 @@
+package com.hu.parking.service.parkingSpace.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hu.parking.dao.FreetimebucketMapper;
+import com.hu.parking.dao.FreetimebuckettmpMapper;
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.service.base.BaseServiceImpl;
+import com.hu.parking.service.parkingSpace.FreetimebuckettmpService;
+
+@Service("freetimebuckettmpService")
+public class FreetimebuckettmpServiceImpl extends BaseServiceImpl<Freetimebuckettmp> implements FreetimebuckettmpService {
+	
+	@Autowired
+	FreetimebuckettmpMapper freetimebuckettmpMapper;
+	
+	@Autowired
+	FreetimebucketMapper freetimebucketMapper;
+	
+	public int addFreetimebuckettmp(Freetimebuckettmp freetimebuckettmp, List<Freetimebucket> freetimebucketList){
+		Integer result = 0;
+		result = freetimebuckettmpMapper.insertSelective(freetimebuckettmp);
+		if (result == 1) {
+			Integer freetimetmpid = freetimebuckettmp.getFreetimebuckettmpid();
+			for (int i = 0; i < freetimebucketList.size(); i++) {
+				System.out.println(freetimebucketList.get(i));
+				Freetimebucket freetimebucket = freetimebucketList.get(i);
+				freetimebucket.setFreetimetmpid(freetimetmpid);
+				result = freetimebucketMapper.insertSelective(freetimebucket);
+			}
+		}
+		
+		return result;
+	}
+}

@@ -1,0 +1,16 @@
+package com.hu.parking.service.msgPush;
+
+public class Test {
+
+	public static void main(String[] args) {
+		MessagePushService messagePushService = new MessagePushService();
+		try {
+			messagePushService.run();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}

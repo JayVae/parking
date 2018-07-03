@@ -1,0 +1,71 @@
+package com.hu.parking.controller.parkingSpace;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hu.parking.common.Page;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.service.parkingSpace.FreetimebuckettmpService;
+import com.hu.parking.service.parkingSpace.FreetimebucketService;
+
+/**
+ * 空闲时段模板
+ * @author leeyuan
+ *
+ */
+@Controller
+@RequestMapping(value = "/freetimebuckettmp")
+public class FreetimebuckettmpController {
+
+	@Autowired
+	FreetimebuckettmpService freetimebuckettmpService;
+
+	@Autowired
+	FreetimebucketService freetimebucketService;
+
+	@Autowired
+	Freetimebuckettmp freetimebuckettmp;
+
+	@Autowired
+	Freetimebucket freetimebucket;
+	
+
+	@RequestMapping(value = "")
+	public String freetimebuckettmpList() {
+		return "parkingSpace/freeTimeBucketTmpList";
+	}
+
+	@RequestMapping(value = "/list")
+	@ResponseBody
+	public Map<String, Object> list(Page page) {
+		return freetimebuckettmpService.pagedByParams(page);
+	}
+
+	@RequestMapping(value = "/freetimebuckettmps")
+	@ResponseBody
+	public List<Freetimebuckettmp> freetimebuckettmps() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("state", "1");
+		List<Freetimebuckettmp> freetimebuckettmps = freetimebuckettmpService.findByParams(params);
+		return freetimebuckettmps;
+	}
+
+	@RequestMapping(value = "/bucket/list")
+	@ResponseBody
+	public List<Freetimebucket> freetimebuckets(String freetimebuckettmpid) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("freetimebuckettmpid", freetimebuckettmpid);
+		List<Freetimebucket> freetimebuckets = freetimebucketService
+				.findByParams(params);
+		return freetimebuckets;
+	}
+
+	
+}

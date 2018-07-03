@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.ParkingplaceftbMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkingplaceftb" >
+    <id column="parkingplaceftbid" property="parkingplaceftbid" jdbcType="INTEGER" />
+    <result column="parkingplacefreetimeid" property="parkingplacefreetimeid" jdbcType="INTEGER" />
+    <result column="freetimebucketbegin" property="freetimebucketbegin" jdbcType="TIME" />
+    <result column="freetimebucketend" property="freetimebucketend" jdbcType="TIME" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkingplaceftbid, parkingplacefreetimeid, freetimebucketbegin, freetimebucketend, 
+    price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkingplaceftb
+    where parkingplaceftbid = #{parkingplaceftbid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from parkingplaceftb
+    where parkingplaceftbid = #{parkingplaceftbid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkingplaceftb" >
+    insert into parkingplaceftb (parkingplaceftbid, parkingplacefreetimeid, 
+      freetimebucketbegin, freetimebucketend, price
+      )
+    values (#{parkingplaceftbid,jdbcType=INTEGER}, #{parkingplacefreetimeid,jdbcType=INTEGER}, 
+      #{freetimebucketbegin,jdbcType=TIME}, #{freetimebucketend,jdbcType=TIME}, #{price,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkingplaceftb" >
+    insert into parkingplaceftb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkingplaceftbid != null" >
+        parkingplaceftbid,
+      </if>
+      <if test="parkingplacefreetimeid != null" >
+        parkingplacefreetimeid,
+      </if>
+      <if test="freetimebucketbegin != null" >
+        freetimebucketbegin,
+      </if>
+      <if test="freetimebucketend != null" >
+        freetimebucketend,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkingplaceftbid != null" >
+        #{parkingplaceftbid,jdbcType=INTEGER},
+      </if>
+      <if test="parkingplacefreetimeid != null" >
+        #{parkingplacefreetimeid,jdbcType=INTEGER},
+      </if>
+      <if test="freetimebucketbegin != null" >
+        #{freetimebucketbegin,jdbcType=TIME},
+      </if>
+      <if test="freetimebucketend != null" >
+        #{freetimebucketend,jdbcType=TIME},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkingplaceftb" >
+    update parkingplaceftb
+    <set >
+      <if test="parkingplacefreetimeid != null" >
+        parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=INTEGER},
+      </if>
+      <if test="freetimebucketbegin != null" >
+        freetimebucketbegin = #{freetimebucketbegin,jdbcType=TIME},
+      </if>
+      <if test="freetimebucketend != null" >
+        freetimebucketend = #{freetimebucketend,jdbcType=TIME},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where parkingplaceftbid = #{parkingplaceftbid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkingplaceftb" >
+    update parkingplaceftb
+    set parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=INTEGER},
+      freetimebucketbegin = #{freetimebucketbegin,jdbcType=TIME},
+      freetimebucketend = #{freetimebucketend,jdbcType=TIME},
+      price = #{price,jdbcType=DOUBLE}
+    where parkingplaceftbid = #{parkingplaceftbid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplaceftb
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplaceftb
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplaceftb
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplaceftb
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplaceftb
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

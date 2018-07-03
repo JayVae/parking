@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.FreetimebuckettmpMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Freetimebuckettmp" >
+    <id column="freetimebuckettmpid" property="freetimebuckettmpid" jdbcType="OTHER" />
+    <result column="orduserid" property="orduserid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="totalhour" property="totalhour" jdbcType="DOUBLE" />
+    <result column="isvalid" property="isvalid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    freetimebuckettmpid, orduserid, name, totalhour, isvalid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from freetimebuckettmp
+    where freetimebuckettmpid = #{freetimebuckettmpid,jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from freetimebuckettmp
+    where freetimebuckettmpid = #{freetimebuckettmpid,jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Freetimebuckettmp" >
+    insert into freetimebuckettmp (freetimebuckettmpid, orduserid, name, 
+      totalhour, isvalid)
+    values (#{freetimebuckettmpid,jdbcType=OTHER, javaType=java.lang.String}, #{orduserid,jdbcType=OTHER, javaType=java.lang.String}, #{name,jdbcType=VARCHAR}, 
+      #{totalhour,jdbcType=DOUBLE}, #{isvalid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Freetimebuckettmp"  >  	
+    insert into freetimebuckettmp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="freetimebuckettmpid != null" >
+        freetimebuckettmpid,
+      </if>
+      <if test="orduserid != null" >
+        orduserid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="totalhour != null" >
+        totalhour,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="freetimebuckettmpid != null" >
+        #{freetimebuckettmpid,jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="orduserid != null" >
+        #{orduserid,jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="totalhour != null" >
+        #{totalhour,jdbcType=DOUBLE},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Freetimebuckettmp" >
+    update freetimebuckettmp
+    <set >
+      <if test="orduserid != null" >
+        orduserid = #{orduserid,jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="totalhour != null" >
+        totalhour = #{totalhour,jdbcType=DOUBLE},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where freetimebuckettmpid = #{freetimebuckettmpid,jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Freetimebuckettmp" >
+    update freetimebuckettmp
+    set orduserid = #{orduserid,jdbcType=OTHER, javaType=java.lang.String},
+      name = #{name,jdbcType=VARCHAR},
+      totalhour = #{totalhour,jdbcType=DOUBLE},
+      isvalid = #{isvalid,jdbcType=VARCHAR}
+    where freetimebuckettmpid = #{freetimebuckettmpid,jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimebuckettmp
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+     freetimebuckettmpid, ftbt.orduserid, name, totalhour, isvalid, realname
+    from freetimebuckettmp as ftbt
+    inner join orduser as ou on ftbt.orduserid = ou.orduserid
+    <where>
+    	<if test="orduserid != null">
+    		and ftbt.orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    </where>   
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from freetimebuckettmp
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimebuckettmp
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from freetimebuckettmp
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+</mapper>

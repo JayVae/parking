@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Sysparameter;
+
+public interface SysparameterMapper {
+    int deleteByPrimaryKey(Integer sysparameterid);
+
+    int insert(Sysparameter record);
+
+    int insertSelective(Sysparameter record);
+
+    Sysparameter selectByPrimaryKey(Integer sysparameterid);
+
+    int updateByPrimaryKeySelective(Sysparameter record);
+
+    int updateByPrimaryKey(Sysparameter record);
+}

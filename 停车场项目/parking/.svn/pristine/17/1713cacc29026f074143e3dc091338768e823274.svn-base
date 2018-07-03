@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Orduser;
+
+public interface OrduserMapper {
+    int deleteByPrimaryKey(Integer orduserid);
+
+    int insert(Orduser record);
+
+    int insertSelective(Orduser record);
+
+    Orduser selectByPrimaryKey(Integer orduserid);
+
+    int updateByPrimaryKeySelective(Orduser record);
+
+    int updateByPrimaryKey(Orduser record);
+}

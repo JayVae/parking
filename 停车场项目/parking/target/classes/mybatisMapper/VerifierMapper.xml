@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.VerifierMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Verifier" >
+    <id column="verifierid" property="verifierid" jdbcType="OTHER" />
+    <result column="parkinglotid" property="parkinglotid" jdbcType="OTHER" />
+    <result column="verifiercode" property="verifiercode" jdbcType="VARCHAR" />
+    <result column="entrancetype" property="entrancetype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    verifierid, parkinglotid, verifiercode, entrancetype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from verifier
+    where verifierid = #{verifierid, jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from verifier
+    where verifierid = #{verifierid, jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Verifier" >
+    insert into verifier (verifierid, parkinglotid, verifiercode, 
+      entrancetype)
+    values (#{verifierid, jdbcType=OTHER, javaType=java.lang.String}, #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String}, #{verifiercode,jdbcType=VARCHAR}, 
+      #{entrancetype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Verifier" >
+    insert into verifier
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="verifierid != null" >
+        verifierid,
+      </if>
+      <if test="parkinglotid != null" >
+        parkinglotid,
+      </if>
+      <if test="verifiercode != null" >
+        verifiercode,
+      </if>
+      <if test="entrancetype != null" >
+        entrancetype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="verifierid != null" >
+        #{verifierid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkinglotid != null" >
+        #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="verifiercode != null" >
+        #{verifiercode,jdbcType=VARCHAR},
+      </if>
+      <if test="entrancetype != null" >
+        #{entrancetype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Verifier" >
+    update verifier
+    <set >
+      <if test="parkinglotid != null" >
+        parkinglotid = #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="verifiercode != null" >
+        verifiercode = #{verifiercode,jdbcType=VARCHAR},
+      </if>
+      <if test="entrancetype != null" >
+        entrancetype = #{entrancetype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where verifierid = #{verifierid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Verifier" >
+    update verifier
+    set parkinglotid = #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String},
+      verifiercode = #{verifiercode,jdbcType=VARCHAR},
+      entrancetype = #{entrancetype,jdbcType=VARCHAR}
+    where verifierid = #{verifierid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from verifier
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from verifier
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from verifier
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from verifier
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from verifier
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

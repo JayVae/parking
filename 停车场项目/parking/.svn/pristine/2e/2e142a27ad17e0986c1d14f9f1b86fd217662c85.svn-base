@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.PpftbuserecordMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Ppftbuserecord" >
+    <id column="ppftbuserecordid" property="ppftbuserecordid" jdbcType="OTHER" />
+    <result column="parkingplaceftbid" property="parkingplaceftbid" jdbcType="OTHER" />
+    <result column="ppftbtime" property="ppftbtime" jdbcType="TIME" />
+    <result column="isused" property="isused" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ppftbuserecordid, parkingplaceftbid, ppftbtime, isused
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ppftbuserecord
+    where ppftbuserecordid = #{ppftbuserecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ppftbuserecord
+    where ppftbuserecordid = #{ppftbuserecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Ppftbuserecord" >
+    insert into ppftbuserecord (ppftbuserecordid, parkingplaceftbid, 
+      ppftbtime, isused)
+    values (#{ppftbuserecordid, jdbcType=OTHER, javaType=java.lang.String}, #{parkingplaceftbid, jdbcType=OTHER, javaType=java.lang.String}, 
+      #{ppftbtime,jdbcType=TIME}, #{isused,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Ppftbuserecord" >
+    insert into ppftbuserecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ppftbuserecordid != null" >
+        ppftbuserecordid,
+      </if>
+      <if test="parkingplaceftbid != null" >
+        parkingplaceftbid,
+      </if>
+      <if test="ppftbtime != null" >
+        ppftbtime,
+      </if>
+      <if test="isused != null" >
+        isused,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ppftbuserecordid != null" >
+        #{ppftbuserecordid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkingplaceftbid != null" >
+        #{parkingplaceftbid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="ppftbtime != null" >
+        #{ppftbtime,jdbcType=TIME},
+      </if>
+      <if test="isused != null" >
+        #{isused,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Ppftbuserecord" >
+    update ppftbuserecord
+    <set >
+      <if test="parkingplaceftbid != null" >
+        parkingplaceftbid = #{parkingplaceftbid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="ppftbtime != null" >
+        ppftbtime = #{ppftbtime,jdbcType=TIME},
+      </if>
+      <if test="isused != null" >
+        isused = #{isused,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ppftbuserecordid = #{ppftbuserecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Ppftbuserecord" >
+    update ppftbuserecord
+    set parkingplaceftbid = #{parkingplaceftbid, jdbcType=OTHER, javaType=java.lang.String},
+      ppftbtime = #{ppftbtime,jdbcType=TIME},
+      isused = #{isused,jdbcType=VARCHAR}
+    where ppftbuserecordid = #{ppftbuserecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from ppftbuserecord
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from ppftbuserecord
+    <where>
+    	<if test="parkingplaceftbList != null">
+    		and parkingplaceftbid in
+    		<foreach collection="parkingplaceftbList" index="index" item="item" open="(" separator="," close=")">
+            	#{item.parkingplaceftbid, jdbcType=OTHER, javaType=java.lang.String}
+        	</foreach>
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from ppftbuserecord
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from ppftbuserecord
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from ppftbuserecord
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

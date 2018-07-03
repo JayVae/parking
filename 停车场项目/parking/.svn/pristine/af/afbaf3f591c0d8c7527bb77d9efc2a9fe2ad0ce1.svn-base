@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.RentrecordMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Rentrecord" >
+    <id column="rentrecordid" property="rentrecordid" jdbcType="OTHER" />
+    <result column="parkingplacefreetimeid" property="parkingplacefreetimeid" jdbcType="OTHER" />
+    <result column="usercarid" property="usercarid" jdbcType="OTHER" />
+    <result column="usercouponid" property="usercouponid" jdbcType="OTHER" />
+    <result column="appointmenttime" property="appointmenttime" jdbcType="TIMESTAMP" />
+    <result column="appointmentbegintime" property="appointmentbegintime" jdbcType="TIMESTAMP" />
+    <result column="appointmentendtime" property="appointmentendtime" jdbcType="TIMESTAMP" />
+    <result column="factbegintime" property="factbegintime" jdbcType="TIMESTAMP" />
+    <result column="factendtime" property="factendtime" jdbcType="TIMESTAMP" />
+    <result column="appointmentcost" property="appointmentcost" jdbcType="DOUBLE" />
+    <result column="freetimecost" property="freetimecost" jdbcType="DOUBLE" />
+    <result column="omittimecostscale" property="omittimecostscale" jdbcType="DOUBLE" />
+    <result column="omittimecost" property="omittimecost" jdbcType="DOUBLE" />
+    <result column="exceedtimecostscale" property="exceedtimecostscale" jdbcType="DOUBLE" />
+    <result column="exceedtimecost" property="exceedtimecost" jdbcType="DOUBLE" />
+    <result column="punishtimecostscale" property="punishtimecostscale" jdbcType="DOUBLE" />
+    <result column="punishcost" property="punishcost" jdbcType="DOUBLE" />
+    <result column="preferentialratio" property="preferentialratio" jdbcType="DOUBLE" />
+    <result column="preferentialcost" property="preferentialcost" jdbcType="DOUBLE" />
+    <result column="payablecost" property="payablecost" jdbcType="DOUBLE" />
+    <result column="paidcost" property="paidcost" jdbcType="DOUBLE" />
+    <result column="paymethod" property="paymethod" jdbcType="VARCHAR" />
+    <result column="ispay" property="ispay" jdbcType="VARCHAR" />
+    <result column="acpaystate" property="acpaystate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rentrecordid, parkingplacefreetimeid, usercarid, usercouponid, appointmenttime, appointmentbegintime, 
+    appointmentendtime, factbegintime, factendtime, appointmentcost, freetimecost, omittimecostscale, 
+    omittimecost, exceedtimecostscale, exceedtimecost, punishtimecostscale, punishcost, 
+    preferentialratio, preferentialcost, payablecost, paidcost, paymethod, ispay, acpaystate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rentrecord
+    where rentrecordid = #{rentrecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rentrecord
+    where rentrecordid = #{rentrecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Rentrecord" >
+    insert into rentrecord (rentrecordid, parkingplacefreetimeid, 
+      usercarid, usercouponid, appointmenttime, 
+      appointmentbegintime, appointmentendtime, factbegintime, 
+      factendtime, appointmentcost, freetimecost, 
+      omittimecostscale, omittimecost, exceedtimecostscale, 
+      exceedtimecost, punishtimecostscale, punishcost, 
+      preferentialratio, preferentialcost, payablecost, 
+      paidcost, paymethod, ispay, acpaystate
+      )
+    values (#{rentrecordid, jdbcType=OTHER, javaType=java.lang.String}, #{parkingplacefreetimeid, jdbcType=OTHER, javaType=java.lang.String}, 
+      #{usercarid, jdbcType=OTHER, javaType=java.lang.String}, #{usercouponid, jdbcType=OTHER, javaType=java.lang.String}, #{appointmenttime,jdbcType=TIMESTAMP}, 
+      #{appointmentbegintime,jdbcType=TIMESTAMP}, #{appointmentendtime,jdbcType=TIMESTAMP}, #{factbegintime,jdbcType=TIMESTAMP}, 
+      #{factendtime,jdbcType=TIMESTAMP}, #{appointmentcost,jdbcType=DOUBLE}, #{freetimecost,jdbcType=DOUBLE}, 
+      #{omittimecostscale,jdbcType=DOUBLE}, #{omittimecost,jdbcType=DOUBLE}, #{exceedtimecostscale,jdbcType=DOUBLE}, 
+      #{exceedtimecost,jdbcType=DOUBLE}, #{punishtimecostscale,jdbcType=DOUBLE}, #{punishcost,jdbcType=DOUBLE}, 
+      #{preferentialratio,jdbcType=DOUBLE}, #{preferentialcost,jdbcType=DOUBLE}, #{payablecost,jdbcType=DOUBLE}, 
+      #{paidcost,jdbcType=DOUBLE}, #{paymethod,jdbcType=VARCHAR}, #{ispay,jdbcType=VARCHAR}, #{acpaystate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Rentrecord" >
+    insert into rentrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rentrecordid != null" >
+        rentrecordid,
+      </if>
+      <if test="parkingplacefreetimeid != null" >
+        parkingplacefreetimeid,
+      </if>
+      <if test="usercarid != null" >
+        usercarid,
+      </if>
+      <if test="usercouponid != null" >
+        usercouponid,
+      </if>
+      <if test="appointmenttime != null" >
+        appointmenttime,
+      </if>
+      <if test="appointmentbegintime != null" >
+        appointmentbegintime,
+      </if>
+      <if test="appointmentendtime != null" >
+        appointmentendtime,
+      </if>
+      <if test="factbegintime != null" >
+        factbegintime,
+      </if>
+      <if test="factendtime != null" >
+        factendtime,
+      </if>
+      <if test="appointmentcost != null" >
+        appointmentcost,
+      </if>
+      <if test="freetimecost != null" >
+        freetimecost,
+      </if>
+      <if test="omittimecostscale != null" >
+        omittimecostscale,
+      </if>
+      <if test="omittimecost != null" >
+        omittimecost,
+      </if>
+      <if test="exceedtimecostscale != null" >
+        exceedtimecostscale,
+      </if>
+      <if test="exceedtimecost != null" >
+        exceedtimecost,
+      </if>
+      <if test="punishtimecostscale != null" >
+        punishtimecostscale,
+      </if>
+      <if test="punishcost != null" >
+        punishcost,
+      </if>
+      <if test="preferentialratio != null" >
+        preferentialratio,
+      </if>
+      <if test="preferentialcost != null" >
+        preferentialcost,
+      </if>
+      <if test="payablecost != null" >
+        payablecost,
+      </if>
+      <if test="paidcost != null" >
+        paidcost,
+      </if>
+      <if test="paymethod != null" >
+        paymethod,
+      </if>
+      <if test="ispay != null" >
+        ispay,
+      </if>
+      <if test="acpaystate != null" >
+        acpaystate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rentrecordid != null" >
+        #{rentrecordid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkingplacefreetimeid != null" >
+        #{parkingplacefreetimeid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="usercarid != null" >
+        #{usercarid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="usercouponid != null" >
+        #{usercouponid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="appointmenttime != null" >
+        #{appointmenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentbegintime != null" >
+        #{appointmentbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentendtime != null" >
+        #{appointmentendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="factbegintime != null" >
+        #{factbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="factendtime != null" >
+        #{factendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentcost != null" >
+        #{appointmentcost,jdbcType=DOUBLE},
+      </if>
+      <if test="freetimecost != null" >
+        #{freetimecost,jdbcType=DOUBLE},
+      </if>
+      <if test="omittimecostscale != null" >
+        #{omittimecostscale,jdbcType=DOUBLE},
+      </if>
+      <if test="omittimecost != null" >
+        #{omittimecost,jdbcType=DOUBLE},
+      </if>
+      <if test="exceedtimecostscale != null" >
+        #{exceedtimecostscale,jdbcType=DOUBLE},
+      </if>
+      <if test="exceedtimecost != null" >
+        #{exceedtimecost,jdbcType=DOUBLE},
+      </if>
+      <if test="punishtimecostscale != null" >
+        #{punishtimecostscale,jdbcType=DOUBLE},
+      </if>
+      <if test="punishcost != null" >
+        #{punishcost,jdbcType=DOUBLE},
+      </if>
+      <if test="preferentialratio != null" >
+        #{preferentialratio,jdbcType=DOUBLE},
+      </if>
+      <if test="preferentialcost != null" >
+        #{preferentialcost,jdbcType=DOUBLE},
+      </if>
+      <if test="payablecost != null" >
+        #{payablecost,jdbcType=DOUBLE},
+      </if>
+      <if test="paidcost != null" >
+        #{paidcost,jdbcType=DOUBLE},
+      </if>
+      <if test="paymethod != null" >
+        #{paymethod,jdbcType=VARCHAR},
+      </if>
+      <if test="ispay != null" >
+        #{ispay,jdbcType=VARCHAR},
+      </if>
+      <if test="acpaystate != null" >
+        #{acpaystate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Rentrecord" >
+    update rentrecord
+    <set >
+      <if test="parkingplacefreetimeid != null" >
+        parkingplacefreetimeid = #{parkingplacefreetimeid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="usercarid != null" >
+        usercarid = #{usercarid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="usercouponid != null" >
+        usercouponid = #{usercouponid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="appointmenttime != null" >
+        appointmenttime = #{appointmenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentbegintime != null" >
+        appointmentbegintime = #{appointmentbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentendtime != null" >
+        appointmentendtime = #{appointmentendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="factbegintime != null" >
+        factbegintime = #{factbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="factendtime != null" >
+        factendtime = #{factendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appointmentcost != null" >
+        appointmentcost = #{appointmentcost,jdbcType=DOUBLE},
+      </if>
+      <if test="freetimecost != null" >
+        freetimecost = #{freetimecost,jdbcType=DOUBLE},
+      </if>
+      <if test="omittimecostscale != null" >
+        omittimecostscale = #{omittimecostscale,jdbcType=DOUBLE},
+      </if>
+      <if test="omittimecost != null" >
+        omittimecost = #{omittimecost,jdbcType=DOUBLE},
+      </if>
+      <if test="exceedtimecostscale != null" >
+        exceedtimecostscale = #{exceedtimecostscale,jdbcType=DOUBLE},
+      </if>
+      <if test="exceedtimecost != null" >
+        exceedtimecost = #{exceedtimecost,jdbcType=DOUBLE},
+      </if>
+      <if test="punishtimecostscale != null" >
+        punishtimecostscale = #{punishtimecostscale,jdbcType=DOUBLE},
+      </if>
+      <if test="punishcost != null" >
+        punishcost = #{punishcost,jdbcType=DOUBLE},
+      </if>
+      <if test="preferentialratio != null" >
+        preferentialratio = #{preferentialratio,jdbcType=DOUBLE},
+      </if>
+      <if test="preferentialcost != null" >
+        preferentialcost = #{preferentialcost,jdbcType=DOUBLE},
+      </if>
+      <if test="payablecost != null" >
+        payablecost = #{payablecost,jdbcType=DOUBLE},
+      </if>
+      <if test="paidcost != null" >
+        paidcost = #{paidcost,jdbcType=DOUBLE},
+      </if>
+      <if test="paymethod != null" >
+        paymethod = #{paymethod,jdbcType=VARCHAR},
+      </if>
+      <if test="ispay != null" >
+        ispay = #{ispay,jdbcType=VARCHAR},
+      </if>
+      <if test="acpaystate != null" >
+        acpaystate = #{acpaystate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rentrecordid = #{rentrecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Rentrecord" >
+    update rentrecord
+    set parkingplacefreetimeid = #{parkingplacefreetimeid, jdbcType=OTHER, javaType=java.lang.String},
+      usercarid = #{usercarid, jdbcType=OTHER, javaType=java.lang.String},
+      usercouponid = #{usercouponid, jdbcType=OTHER, javaType=java.lang.String},
+      appointmenttime = #{appointmenttime,jdbcType=TIMESTAMP},
+      appointmentbegintime = #{appointmentbegintime,jdbcType=TIMESTAMP},
+      appointmentendtime = #{appointmentendtime,jdbcType=TIMESTAMP},
+      factbegintime = #{factbegintime,jdbcType=TIMESTAMP},
+      factendtime = #{factendtime,jdbcType=TIMESTAMP},
+      appointmentcost = #{appointmentcost,jdbcType=DOUBLE},
+      freetimecost = #{freetimecost,jdbcType=DOUBLE},
+      omittimecostscale = #{omittimecostscale,jdbcType=DOUBLE},
+      omittimecost = #{omittimecost,jdbcType=DOUBLE},
+      exceedtimecostscale = #{exceedtimecostscale,jdbcType=DOUBLE},
+      exceedtimecost = #{exceedtimecost,jdbcType=DOUBLE},
+      punishtimecostscale = #{punishtimecostscale,jdbcType=DOUBLE},
+      punishcost = #{punishcost,jdbcType=DOUBLE},
+      preferentialratio = #{preferentialratio,jdbcType=DOUBLE},
+      preferentialcost = #{preferentialcost,jdbcType=DOUBLE},
+      payablecost = #{payablecost,jdbcType=DOUBLE},
+      paidcost = #{paidcost,jdbcType=DOUBLE},
+      paymethod = #{paymethod,jdbcType=VARCHAR},
+      ispay = #{ispay,jdbcType=VARCHAR},
+      acpaystate = #{acpaystate,jdbcType=VARCHAR}
+    where rentrecordid = #{rentrecordid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from rentrecord
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT rr.rentrecordid, rr.parkingplacefreetimeid, rr.usercarid, rr.usercouponid, rr.appointmenttime, rr.appointmentbegintime, 
+		    rr.appointmentendtime, rr.factbegintime, rr.factendtime, rr.appointmentcost, rr.freetimecost, rr.omittimecostscale, 
+		    rr.omittimecost, rr.exceedtimecostscale, rr.exceedtimecost, rr.punishtimecostscale, rr.punishcost, 
+		    rr.preferentialratio, rr.preferentialcost, rr.payablecost, rr.paidcost, rr.paymethod, rr.ispay, rr.acpaystate,
+			uc.carnumber, pp.parkingplaceno, ou.realname, ps.slicename,pl.parkinglotname
+	FROM rentrecord  as rr
+	INNER JOIN usercar as uc on rr.usercarid = uc.usercarid
+	INNER JOIN parkingplacefreetime as pf  on rr.parkingplacefreetimeid = pf.parkingplacefreetimeid
+	INNER JOIN parkingplace as pp on pf.parkingplaceid = pp.parkingplaceid
+	INNER JOIN orduser as ou on uc.orduserid = ou.orduserid
+	INNER JOIN parkinglotslice as ps on pp.parkinglotsliceid = ps.parkinglotsliceid
+	INNER JOIN parkinglot as pl on ps.parkinglotid = pl.parkinglotid
+	<where>
+		<if test="orduserid != null">
+			and ou.orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String}
+		</if>
+		<if test="begindate != null">
+			<![CDATA[and factbegintime >= #{begindate}]]>
+		</if>
+		<if test="enddate != null">
+			<![CDATA[and factbegintime <= #{enddate}]]>
+		</if>
+		<if test="parkingplaceid != null">
+    		and pf.parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="appointment != null">
+    		and rr.factbegintime is NULL
+    	</if>
+	</where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByNParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT rr.rentrecordid, rr.parkingplacefreetimeid, rr.usercarid, rr.usercouponid, rr.appointmenttime, rr.appointmentbegintime, 
+		    rr.appointmentendtime, rr.factbegintime, rr.factendtime, rr.appointmentcost, rr.freetimecost, rr.omittimecostscale, 
+		    rr.omittimecost, rr.exceedtimecostscale, rr.exceedtimecost, rr.punishtimecostscale, rr.punishcost, 
+		    rr.preferentialratio, rr.preferentialcost, rr.payablecost, rr.paidcost, rr.paymethod, rr.ispay, rr.acpaystate,
+			uc.carnumber 
+    from rentrecord as rr
+    INNER JOIN usercar as uc on rr.usercarid = uc.usercarid
+    <where >
+      <if test="parkingplacefreetimeid != null">
+    		and rr.parkingplacefreetimeid =  #{parkingplacefreetimeid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from rentrecord
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from rentrecord
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from rentrecord
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+</mapper>

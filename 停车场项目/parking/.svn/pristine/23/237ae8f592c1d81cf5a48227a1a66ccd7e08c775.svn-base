@@ -1,0 +1,101 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Component
+public class Parkingplacefreetime implements Serializable {
+    private String parkingplacefreetimeid;
+
+    private String parkingplaceid;
+
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private Date freedate;
+
+    private Double totalhour;
+
+    private String usestate;
+
+    private String isvalid;
+
+    private String isused;
+    
+    private List<Parkingplaceftb> parkingplaceftbList;
+    
+    
+
+    private static final long serialVersionUID = 1L;
+
+    public String getParkingplacefreetimeid() {
+        return parkingplacefreetimeid;
+    }
+
+    public void setParkingplacefreetimeid(String parkingplacefreetimeid) {
+        this.parkingplacefreetimeid = parkingplacefreetimeid;
+    }
+
+    public String getParkingplaceid() {
+        return parkingplaceid;
+    }
+
+    public void setParkingplaceid(String parkingplaceid) {
+        this.parkingplaceid = parkingplaceid;
+    }
+
+    public Date getFreedate() {
+        return freedate;
+    }
+
+    public void setFreedate(Date freedate) {
+        this.freedate = freedate;
+    }
+
+    public Double getTotalhour() {
+        return totalhour;
+    }
+
+    public void setTotalhour(Double totalhour) {
+        this.totalhour = totalhour;
+    }
+
+    public String getUsestate() {
+        return usestate;
+    }
+
+    public void setUsestate(String usestate) {
+        this.usestate = usestate == null ? null : usestate.trim();
+    }
+
+    public String getIsvalid() {
+        return isvalid;
+    }
+
+    public void setIsvalid(String isvalid) {
+        this.isvalid = isvalid == null ? null : isvalid.trim();
+    }
+
+    public String getIsused() {
+        return isused;
+    }
+
+    public void setIsused(String isused) {
+        this.isused = isused == null ? null : isused.trim();
+    }
+
+	public List<Parkingplaceftb> getParkingplaceftbList() {
+		return parkingplaceftbList;
+	}
+
+	public void setParkingplaceftbList(List<Parkingplaceftb> parkingplaceftbList) {
+		this.parkingplaceftbList = parkingplaceftbList;
+	}
+
+	
+    
+    
+}

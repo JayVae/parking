@@ -1,0 +1,241 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Rentrecord implements Serializable {
+    private Integer rentrecordid;
+
+    private Integer parkingplacefreetimeid;
+
+    private Integer usercarid;
+
+    private Integer usercouponid;
+
+    private Date appointmenttime;
+
+    private Date appointmentbegintime;
+
+    private Date appointmentendtime;
+
+    private Date factbegintime;
+
+    private Date factendtime;
+
+    private Double appointmentcost;
+
+    private Double freetimecost;
+
+    private Double omittimecostscale;
+
+    private Double omittimecost;
+
+    private Double exceedtimecostscale;
+
+    private Double exceedtimecost;
+
+    private Double punishtimecostscale;
+
+    private Double punishcost;
+
+    private Double preferentialratio;
+
+    private Double preferentialcost;
+
+    private Double payablecost;
+
+    private Double paidcost;
+
+    private String paymethod;
+
+    private String ispay;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getRentrecordid() {
+        return rentrecordid;
+    }
+
+    public void setRentrecordid(Integer rentrecordid) {
+        this.rentrecordid = rentrecordid;
+    }
+
+    public Integer getParkingplacefreetimeid() {
+        return parkingplacefreetimeid;
+    }
+
+    public void setParkingplacefreetimeid(Integer parkingplacefreetimeid) {
+        this.parkingplacefreetimeid = parkingplacefreetimeid;
+    }
+
+    public Integer getUsercarid() {
+        return usercarid;
+    }
+
+    public void setUsercarid(Integer usercarid) {
+        this.usercarid = usercarid;
+    }
+
+    public Integer getUsercouponid() {
+        return usercouponid;
+    }
+
+    public void setUsercouponid(Integer usercouponid) {
+        this.usercouponid = usercouponid;
+    }
+
+    public Date getAppointmenttime() {
+        return appointmenttime;
+    }
+
+    public void setAppointmenttime(Date appointmenttime) {
+        this.appointmenttime = appointmenttime;
+    }
+
+    public Date getAppointmentbegintime() {
+        return appointmentbegintime;
+    }
+
+    public void setAppointmentbegintime(Date appointmentbegintime) {
+        this.appointmentbegintime = appointmentbegintime;
+    }
+
+    public Date getAppointmentendtime() {
+        return appointmentendtime;
+    }
+
+    public void setAppointmentendtime(Date appointmentendtime) {
+        this.appointmentendtime = appointmentendtime;
+    }
+
+    public Date getFactbegintime() {
+        return factbegintime;
+    }
+
+    public void setFactbegintime(Date factbegintime) {
+        this.factbegintime = factbegintime;
+    }
+
+    public Date getFactendtime() {
+        return factendtime;
+    }
+
+    public void setFactendtime(Date factendtime) {
+        this.factendtime = factendtime;
+    }
+
+    public Double getAppointmentcost() {
+        return appointmentcost;
+    }
+
+    public void setAppointmentcost(Double appointmentcost) {
+        this.appointmentcost = appointmentcost;
+    }
+
+    public Double getFreetimecost() {
+        return freetimecost;
+    }
+
+    public void setFreetimecost(Double freetimecost) {
+        this.freetimecost = freetimecost;
+    }
+
+    public Double getOmittimecostscale() {
+        return omittimecostscale;
+    }
+
+    public void setOmittimecostscale(Double omittimecostscale) {
+        this.omittimecostscale = omittimecostscale;
+    }
+
+    public Double getOmittimecost() {
+        return omittimecost;
+    }
+
+    public void setOmittimecost(Double omittimecost) {
+        this.omittimecost = omittimecost;
+    }
+
+    public Double getExceedtimecostscale() {
+        return exceedtimecostscale;
+    }
+
+    public void setExceedtimecostscale(Double exceedtimecostscale) {
+        this.exceedtimecostscale = exceedtimecostscale;
+    }
+
+    public Double getExceedtimecost() {
+        return exceedtimecost;
+    }
+
+    public void setExceedtimecost(Double exceedtimecost) {
+        this.exceedtimecost = exceedtimecost;
+    }
+
+    public Double getPunishtimecostscale() {
+        return punishtimecostscale;
+    }
+
+    public void setPunishtimecostscale(Double punishtimecostscale) {
+        this.punishtimecostscale = punishtimecostscale;
+    }
+
+    public Double getPunishcost() {
+        return punishcost;
+    }
+
+    public void setPunishcost(Double punishcost) {
+        this.punishcost = punishcost;
+    }
+
+    public Double getPreferentialratio() {
+        return preferentialratio;
+    }
+
+    public void setPreferentialratio(Double preferentialratio) {
+        this.preferentialratio = preferentialratio;
+    }
+
+    public Double getPreferentialcost() {
+        return preferentialcost;
+    }
+
+    public void setPreferentialcost(Double preferentialcost) {
+        this.preferentialcost = preferentialcost;
+    }
+
+    public Double getPayablecost() {
+        return payablecost;
+    }
+
+    public void setPayablecost(Double payablecost) {
+        this.payablecost = payablecost;
+    }
+
+    public Double getPaidcost() {
+        return paidcost;
+    }
+
+    public void setPaidcost(Double paidcost) {
+        this.paidcost = paidcost;
+    }
+
+    public String getPaymethod() {
+        return paymethod;
+    }
+
+    public void setPaymethod(String paymethod) {
+        this.paymethod = paymethod == null ? null : paymethod.trim();
+    }
+
+    public String getIspay() {
+        return ispay;
+    }
+
+    public void setIspay(String ispay) {
+        this.ispay = ispay == null ? null : ispay.trim();
+    }
+}

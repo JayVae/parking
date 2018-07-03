@@ -1,0 +1,13 @@
+package com.hu.parking.service.parkingSpace.impl;
+
+import org.springframework.stereotype.Service;
+
+@Service("computeFeeService")
+public class ComputeFeeServiceImpl {
+
+	public Double computfee(){
+		Double result = 0.0;
+		
+		return result;
+	}
+}

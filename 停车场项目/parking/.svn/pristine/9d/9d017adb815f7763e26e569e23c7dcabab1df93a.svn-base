@@ -1,0 +1,132 @@
+package com.hu.parking.controller.parkingSpace;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hu.parking.common.Page;
+import com.hu.parking.common.ResultCode;
+import com.hu.parking.entity.Parkinglot;
+import com.hu.parking.entity.Permissions;
+import com.hu.parking.service.parkingSpace.ParkinglotService;
+import com.hu.parking.service.system.PermissionsService;
+import com.hu.parking.util.Identities;
+
+@Controller
+@RequestMapping(value = "/parkinglot")
+public class ParkinglotController {
+
+	@Autowired
+	ParkinglotService parkinglotService;
+
+	@Autowired
+	Parkinglot parkinglot;
+	
+	
+	@RequestMapping(value = "")
+	public String parkinglotList() {
+		return "parkingSpace/parkinglotList";
+	}
+
+	@RequestMapping(value = "/list")
+	@ResponseBody
+	public Map<String, Object> list(Page page) {
+		return parkinglotService.pagedByParams(page);
+	}
+
+	@RequestMapping(value = "/parkinglots")
+	@ResponseBody
+	public List<Parkinglot> parkinglots(String type, String state) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("type",	type);
+		params.put("state",	state);
+		List<Parkinglot> parkinglots = parkinglotService.findByParams(params);
+		return parkinglots;
+	}
+	
+	@RequestMapping(value = "/info")
+	public String info() {
+		return "parkingSpace/parkinglotInfo";
+	}
+	
+	@RequestMapping(value = "/perminfo")
+	public String perminfo() {
+		return "parkingSpace/parkinglotpermInfo";
+	}
+		
+	@RequestMapping(value = "/insert")
+	@ResponseBody
+	public Map<String, Object> insert(Parkinglot parkinglot) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		parkinglotService.insertSelective(parkinglot);
+		result.put("result", ResultCode.SUCCESS);
+		result.put("resultMsg", "添加停车场成功！");
+		return result;
+	}
+	
+	@RequestMapping(value = "/{parkinglotid}/edit")
+	@ResponseBody
+	public Parkinglot edit(@PathVariable("parkinglotid") Integer parkinglotid) {
+		return parkinglotService.selectByPrimaryKey(parkinglotid);
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> update(Parkinglot parkinglot) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int row = parkinglotService.updateByPrimaryKeySelective(parkinglot);
+		if (row == 1) {
+			result.put("result", ResultCode.SUCCESS);
+			result.put("resultMsg", "修改停车场成功！");
+		} else {
+			result.put("result", ResultCode.FAILURE);
+			result.put("resultMsg", "该停车场已不存在！");
+		}
+		return result;
+	}
+	
+	
+	
+	@RequestMapping(value = "/{parkinglotid}/view")
+	@ResponseBody
+	public Parkinglot view(@PathVariable("parkinglotid") Integer parkinglotid) {
+		parkinglot = parkinglotService.selectByPrimaryKey(parkinglotid);
+		return parkinglot;
+	}
+	
+	@RequestMapping(value = "/{parkinglotid}/delete")
+	@ResponseBody
+	public Map<String, Object> delete(@PathVariable("parkinglotid") Integer parkinglotid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int row = parkinglotService.deleteByPrimaryKey(parkinglotid);
+		if (row == 1) {
+			result.put("result", ResultCode.SUCCESS);
+			result.put("resultMsg", "删除停车场成功！");
+		} else {
+			result.put("result", ResultCode.FAILURE);
+			result.put("resultMsg", "该停车场已不存在！");
+		}
+		return result;
+	}
+
+	
+	@RequestMapping(value = "/isexist")
+	@ResponseBody
+	public String isExist(String parkinglotname, Integer parkinglotid) {
+		int result = parkinglotService.findByKeyCount("parkinglotname", parkinglotname,"parkinglotid", parkinglotid);
+		if (result == 0) {
+			return ResultCode.UNEXIST;
+		} else {
+			return ResultCode.EXIST;
+		}
+	}
+	
+	
+}

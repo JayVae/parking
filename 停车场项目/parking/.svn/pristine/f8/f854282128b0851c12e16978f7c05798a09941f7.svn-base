@@ -1,0 +1,112 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Parkinglot implements Serializable {
+    private Integer parkinglotid;
+
+    private Integer propertycompanyid;
+
+    private String parkinglotname;
+
+    private String longitude;
+
+    private String latitude;
+
+    private Integer parkingplacenum;
+
+    private Integer freeparkingplacenum;
+
+    private String note;
+
+    private String state;
+    
+    private String parkinglotaddress;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getParkinglotid() {
+        return parkinglotid;
+    }
+
+    public void setParkinglotid(Integer parkinglotid) {
+        this.parkinglotid = parkinglotid;
+    }
+
+    public Integer getPropertycompanyid() {
+        return propertycompanyid;
+    }
+
+    public void setPropertycompanyid(Integer propertycompanyid) {
+        this.propertycompanyid = propertycompanyid;
+    }
+
+    public String getParkinglotname() {
+        return parkinglotname;
+    }
+
+    public void setParkinglotname(String parkinglotname) {
+        this.parkinglotname = parkinglotname == null ? null : parkinglotname.trim();
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
+    }
+
+    public Integer getParkingplacenum() {
+        return parkingplacenum;
+    }
+
+    public void setParkingplacenum(Integer parkingplacenum) {
+        this.parkingplacenum = parkingplacenum;
+    }
+
+    public Integer getFreeparkingplacenum() {
+        return freeparkingplacenum;
+    }
+
+    public void setFreeparkingplacenum(Integer freeparkingplacenum) {
+        this.freeparkingplacenum = freeparkingplacenum;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
+    }
+
+	public String getParkinglotaddress() {
+		return parkinglotaddress;
+	}
+
+	public void setParkinglotaddress(String parkinglotaddress) {
+		this.parkinglotaddress = parkinglotaddress  == null ? null : parkinglotaddress.trim();
+	}
+    
+    
+}

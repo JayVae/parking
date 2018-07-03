@@ -1,0 +1,56 @@
+package com.hu.parking.service.parkingSpace.impl;
+
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hu.parking.dao.FreetimebucketMapper;
+import com.hu.parking.dao.FreetimebuckettmpMapper;
+import com.hu.parking.dao.parkingSpace.ParkingplacefreetimeMapper;
+import com.hu.parking.dao.parkingSpace.ParkingplaceftbMapper;
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.entity.Parkingplacefreetime;
+import com.hu.parking.entity.Parkingplaceftb;
+import com.hu.parking.service.base.BaseServiceImpl;
+import com.hu.parking.service.parkingSpace.FreetimebuckettmpService;
+import com.hu.parking.service.parkingSpace.ParkingplacefreetimeService;
+
+@Service("parkingplacefreetimeService")
+public class ParkingplacefreetimeServiceImpl extends BaseServiceImpl<Parkingplacefreetime> implements ParkingplacefreetimeService {
+	
+	@Autowired
+	ParkingplacefreetimeMapper parkingplacefreetimeMapper;
+	
+	@Autowired
+	ParkingplaceftbMapper parkingplaceftbMapper;
+	
+	public int addParkingplacefreetime(Parkingplacefreetime parkingplacefreetime, List<Parkingplaceftb> parkingplaceftbList, String[] freeDate){
+		Integer result = 0;
+		for (int j = 0; j < freeDate.length; j++) {
+			parkingplacefreetime.setParkingplacefreetimeid(null);
+			Date date = null;
+			try {
+				date = DateUtils.parseDate(freeDate[j], "yyyy-MM-dd");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			parkingplacefreetime.setFreedata(date);
+			result = parkingplacefreetimeMapper.insertSelective(parkingplacefreetime);
+			if (result == 1) {
+				Integer parkingplacefreetimeid = parkingplacefreetime.getParkingplacefreetimeid();
+				for (int i = 0; i < parkingplaceftbList.size(); i++) {
+					Parkingplaceftb parkingplaceftb = parkingplaceftbList.get(i);
+					parkingplaceftb.setParkingplacefreetimeid(parkingplacefreetimeid);
+					result = parkingplaceftbMapper.insertSelective(parkingplaceftb);
+				}
+			}
+		}
+		return result;
+	}
+
+}

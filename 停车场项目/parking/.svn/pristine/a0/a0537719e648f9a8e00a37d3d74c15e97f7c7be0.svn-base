@@ -1,0 +1,47 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+
+public class Verifier implements Serializable {
+    private Integer verifierid;
+
+    private Integer parkinglotid;
+
+    private String verifiercode;
+
+    private String entrancetype;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getVerifierid() {
+        return verifierid;
+    }
+
+    public void setVerifierid(Integer verifierid) {
+        this.verifierid = verifierid;
+    }
+
+    public Integer getParkinglotid() {
+        return parkinglotid;
+    }
+
+    public void setParkinglotid(Integer parkinglotid) {
+        this.parkinglotid = parkinglotid;
+    }
+
+    public String getVerifiercode() {
+        return verifiercode;
+    }
+
+    public void setVerifiercode(String verifiercode) {
+        this.verifiercode = verifiercode == null ? null : verifiercode.trim();
+    }
+
+    public String getEntrancetype() {
+        return entrancetype;
+    }
+
+    public void setEntrancetype(String entrancetype) {
+        this.entrancetype = entrancetype == null ? null : entrancetype.trim();
+    }
+}

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.ParkingplacefreetimeMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkingplacefreetime" >
+    <id column="parkingplacefreetimeid" property="parkingplacefreetimeid" jdbcType="OTHER" />
+    <result column="parkingplaceid" property="parkingplaceid" jdbcType="OTHER" />
+    <result column="orduserid" property="orduserid" jdbcType="OTHER" />
+    <result column="freetimebucketbegin" property="freetimebucketbegin" jdbcType="TIMESTAMP" />
+    <result column="freetimebucketend" property="freetimebucketend" jdbcType="TIMESTAMP" />
+    <result column="ruletype" property="ruletype" jdbcType="CHAR" />
+    <result column="unitprice" property="unitprice" jdbcType="DOUBLE" />
+    <result column="unittimelong" property="unittimelong" jdbcType="REAL" />
+    <result column="startprice" property="startprice" jdbcType="DOUBLE" />
+    <result column="starttimelong" property="starttimelong" jdbcType="REAL" />
+    <result column="punishunitprice" property="punishunitprice" jdbcType="DOUBLE" />
+    <result column="punishunittimelong" property="punishunittimelong" jdbcType="REAL" />
+    <result column="punishtype" property="punishtype" jdbcType="CHAR" />
+    <result column="usestate" property="usestate" jdbcType="CHAR" />
+    <result column="isappointment" property="isappointment" jdbcType="CHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkingplacefreetimeid, parkingplaceid, orduserid, freetimebucketbegin, freetimebucketend, 
+    ruletype, unitprice, unittimelong, startprice, starttimelong, punishunitprice, punishunittimelong, 
+    punishtype, usestate, isappointment, isvalid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Object" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=OTHER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Object" >
+    delete from parkingplacefreetime
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=OTHER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    insert into parkingplacefreetime (parkingplacefreetimeid, parkingplaceid, 
+      orduserid, freetimebucketbegin, freetimebucketend, 
+      ruletype, unitprice, unittimelong, 
+      startprice, starttimelong, punishunitprice, 
+      punishunittimelong, punishtype, usestate, 
+      isappointment, isvalid)
+    values (#{parkingplacefreetimeid,jdbcType=OTHER}, #{parkingplaceid,jdbcType=OTHER}, 
+      #{orduserid,jdbcType=OTHER}, #{freetimebucketbegin,jdbcType=TIMESTAMP}, #{freetimebucketend,jdbcType=TIMESTAMP}, 
+      #{ruletype,jdbcType=CHAR}, #{unitprice,jdbcType=DOUBLE}, #{unittimelong,jdbcType=REAL}, 
+      #{startprice,jdbcType=DOUBLE}, #{starttimelong,jdbcType=REAL}, #{punishunitprice,jdbcType=DOUBLE}, 
+      #{punishunittimelong,jdbcType=REAL}, #{punishtype,jdbcType=CHAR}, #{usestate,jdbcType=CHAR}, 
+      #{isappointment,jdbcType=CHAR}, #{isvalid,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    insert into parkingplacefreetime
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkingplacefreetimeid != null" >
+        parkingplacefreetimeid,
+      </if>
+      <if test="parkingplaceid != null" >
+        parkingplaceid,
+      </if>
+      <if test="orduserid != null" >
+        orduserid,
+      </if>
+      <if test="freetimebucketbegin != null" >
+        freetimebucketbegin,
+      </if>
+      <if test="freetimebucketend != null" >
+        freetimebucketend,
+      </if>
+      <if test="ruletype != null" >
+        ruletype,
+      </if>
+      <if test="unitprice != null" >
+        unitprice,
+      </if>
+      <if test="unittimelong != null" >
+        unittimelong,
+      </if>
+      <if test="startprice != null" >
+        startprice,
+      </if>
+      <if test="starttimelong != null" >
+        starttimelong,
+      </if>
+      <if test="punishunitprice != null" >
+        punishunitprice,
+      </if>
+      <if test="punishunittimelong != null" >
+        punishunittimelong,
+      </if>
+      <if test="punishtype != null" >
+        punishtype,
+      </if>
+      <if test="usestate != null" >
+        usestate,
+      </if>
+      <if test="isappointment != null" >
+        isappointment,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkingplacefreetimeid != null" >
+        #{parkingplacefreetimeid,jdbcType=OTHER},
+      </if>
+      <if test="parkingplaceid != null" >
+        #{parkingplaceid,jdbcType=OTHER},
+      </if>
+      <if test="orduserid != null" >
+        #{orduserid,jdbcType=OTHER},
+      </if>
+      <if test="freetimebucketbegin != null" >
+        #{freetimebucketbegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freetimebucketend != null" >
+        #{freetimebucketend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruletype != null" >
+        #{ruletype,jdbcType=CHAR},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unittimelong != null" >
+        #{unittimelong,jdbcType=REAL},
+      </if>
+      <if test="startprice != null" >
+        #{startprice,jdbcType=DOUBLE},
+      </if>
+      <if test="starttimelong != null" >
+        #{starttimelong,jdbcType=REAL},
+      </if>
+      <if test="punishunitprice != null" >
+        #{punishunitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="punishunittimelong != null" >
+        #{punishunittimelong,jdbcType=REAL},
+      </if>
+      <if test="punishtype != null" >
+        #{punishtype,jdbcType=CHAR},
+      </if>
+      <if test="usestate != null" >
+        #{usestate,jdbcType=CHAR},
+      </if>
+      <if test="isappointment != null" >
+        #{isappointment,jdbcType=CHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    update parkingplacefreetime
+    <set >
+      <if test="parkingplaceid != null" >
+        parkingplaceid = #{parkingplaceid,jdbcType=OTHER},
+      </if>
+      <if test="orduserid != null" >
+        orduserid = #{orduserid,jdbcType=OTHER},
+      </if>
+      <if test="freetimebucketbegin != null" >
+        freetimebucketbegin = #{freetimebucketbegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freetimebucketend != null" >
+        freetimebucketend = #{freetimebucketend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruletype != null" >
+        ruletype = #{ruletype,jdbcType=CHAR},
+      </if>
+      <if test="unitprice != null" >
+        unitprice = #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unittimelong != null" >
+        unittimelong = #{unittimelong,jdbcType=REAL},
+      </if>
+      <if test="startprice != null" >
+        startprice = #{startprice,jdbcType=DOUBLE},
+      </if>
+      <if test="starttimelong != null" >
+        starttimelong = #{starttimelong,jdbcType=REAL},
+      </if>
+      <if test="punishunitprice != null" >
+        punishunitprice = #{punishunitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="punishunittimelong != null" >
+        punishunittimelong = #{punishunittimelong,jdbcType=REAL},
+      </if>
+      <if test="punishtype != null" >
+        punishtype = #{punishtype,jdbcType=CHAR},
+      </if>
+      <if test="usestate != null" >
+        usestate = #{usestate,jdbcType=CHAR},
+      </if>
+      <if test="isappointment != null" >
+        isappointment = #{isappointment,jdbcType=CHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=CHAR},
+      </if>
+    </set>
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=OTHER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    update parkingplacefreetime
+    set parkingplaceid = #{parkingplaceid,jdbcType=OTHER},
+      orduserid = #{orduserid,jdbcType=OTHER},
+      freetimebucketbegin = #{freetimebucketbegin,jdbcType=TIMESTAMP},
+      freetimebucketend = #{freetimebucketend,jdbcType=TIMESTAMP},
+      ruletype = #{ruletype,jdbcType=CHAR},
+      unitprice = #{unitprice,jdbcType=DOUBLE},
+      unittimelong = #{unittimelong,jdbcType=REAL},
+      startprice = #{startprice,jdbcType=DOUBLE},
+      starttimelong = #{starttimelong,jdbcType=REAL},
+      punishunitprice = #{punishunitprice,jdbcType=DOUBLE},
+      punishunittimelong = #{punishunittimelong,jdbcType=REAL},
+      punishtype = #{punishtype,jdbcType=CHAR},
+      usestate = #{usestate,jdbcType=CHAR},
+      isappointment = #{isappointment,jdbcType=CHAR},
+      isvalid = #{isvalid,jdbcType=CHAR}
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=OTHER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    pf.parkingplacefreetimeid, pf.parkingplaceid, pf.orduserid, pf.freetimebucketbegin, pf.freetimebucketend, 
+    pf.ruletype, pf.unitprice, pf.unittimelong, pf.startprice, pf.starttimelong, pf.punishunitprice, pf.punishunittimelong, 
+    pf.punishtype, pf.usestate, pf.isappointment, pf.isvalid , pp.parkingplaceno, pl.parkinglotname, pl.longitude, pl.latitude
+    from parkingplacefreetime as pf
+    inner join parkingplace as pp on pf.parkingplaceid = pp.parkingplaceid
+    inner join parkinglotslice as pls on pp.parkinglotsliceid = pls.parkinglotsliceid
+    inner join parkinglot as pl on pl.parkinglotid = pls.parkinglotid
+    <where>
+    	<if test="parkingplaceid != null">
+    		and pf.parkingplaceid =#{parkingplaceid,jdbcType=OTHER}
+    	</if>
+    	<if test="begindatetime != null">
+    		<![CDATA[ and pf.freetimebucketbegin <=#{begindatetime}]]>
+    	</if>
+    	<if test="enddatetime != null">
+    		<![CDATA[ and pf.freetimebucketend >=#{enddatetime}]]>
+    	</if>
+    	<if test="longitudeMax != null">
+    		<![CDATA[ and pl.longitude <= #{longitudeMax} and pl.longitude >= #{longitudeMin}
+    		and pl.latitude <= #{latitudeMax} and pl.latitude >= #{latitudeMin} ]]>
+    	</if>
+    	<if test="maxPrice != null">
+    		<![CDATA[ and pf.unitprice <=#{maxPrice}]]>
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplacefreetime
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplacefreetime
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

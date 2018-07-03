@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.ParkinglotMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkinglot" >
+    <id column="parkinglotid" property="parkinglotid" jdbcType="INTEGER" />
+    <result column="propertycompanyid" property="propertycompanyid" jdbcType="INTEGER" />
+    <result column="parkinglotname" property="parkinglotname" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="parkingplacenum" property="parkingplacenum" jdbcType="INTEGER" />
+    <result column="freeparkingplacenum" property="freeparkingplacenum" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkinglotid, propertycompanyid, parkinglotname, longitude, latitude, parkingplacenum, 
+    freeparkingplacenum, note, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkinglot
+    where parkinglotid = #{parkinglotid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from parkinglot
+    where parkinglotid = #{parkinglotid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkinglot" >
+    insert into parkinglot (parkinglotid, propertycompanyid, 
+      parkinglotname, longitude, latitude, 
+      parkingplacenum, freeparkingplacenum, note, 
+      state)
+    values (#{parkinglotid,jdbcType=INTEGER}, #{propertycompanyid,jdbcType=INTEGER}, 
+      #{parkinglotname,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{parkingplacenum,jdbcType=INTEGER}, #{freeparkingplacenum,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkinglot" >
+    insert into parkinglot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkinglotid != null" >
+        parkinglotid,
+      </if>
+      <if test="propertycompanyid != null" >
+        propertycompanyid,
+      </if>
+      <if test="parkinglotname != null" >
+        parkinglotname,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="parkingplacenum != null" >
+        parkingplacenum,
+      </if>
+      <if test="freeparkingplacenum != null" >
+        freeparkingplacenum,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkinglotid != null" >
+        #{parkinglotid,jdbcType=INTEGER},
+      </if>
+      <if test="propertycompanyid != null" >
+        #{propertycompanyid,jdbcType=INTEGER},
+      </if>
+      <if test="parkinglotname != null" >
+        #{parkinglotname,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingplacenum != null" >
+        #{parkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="freeparkingplacenum != null" >
+        #{freeparkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkinglot" >
+    update parkinglot
+    <set >
+      <if test="propertycompanyid != null" >
+        propertycompanyid = #{propertycompanyid,jdbcType=INTEGER},
+      </if>
+      <if test="parkinglotname != null" >
+        parkinglotname = #{parkinglotname,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingplacenum != null" >
+        parkingplacenum = #{parkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="freeparkingplacenum != null" >
+        freeparkingplacenum = #{freeparkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parkinglotid = #{parkinglotid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkinglot" >
+    update parkinglot
+    set propertycompanyid = #{propertycompanyid,jdbcType=INTEGER},
+      parkinglotname = #{parkinglotname,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      parkingplacenum = #{parkingplacenum,jdbcType=INTEGER},
+      freeparkingplacenum = #{freeparkingplacenum,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where parkinglotid = #{parkinglotid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkinglot
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkinglot
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

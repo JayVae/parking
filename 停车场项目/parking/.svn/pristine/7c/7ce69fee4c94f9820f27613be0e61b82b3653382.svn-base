@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.FreetimetmpMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Freetimetmp" >
+    <id column="freetimetmpid" property="freetimetmpid" jdbcType="OTHER" />
+    <result column="orduserid" property="orduserid" jdbcType="OTHER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    freetimetmpid, orduserid, name, isvalid, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Object" >
+    select 
+    <include refid="Base_Column_List" />
+    from freetimetmp
+    where freetimetmpid = #{freetimetmpid,jdbcType=OTHER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Object" >
+    delete from freetimetmp
+    where freetimetmpid = #{freetimetmpid,jdbcType=OTHER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Freetimetmp" >
+    insert into freetimetmp (freetimetmpid, orduserid, name, 
+      isvalid, note)
+    values (#{freetimetmpid,jdbcType=OTHER}, #{orduserid,jdbcType=OTHER}, #{name,jdbcType=VARCHAR}, 
+      #{isvalid,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Freetimetmp" >
+    insert into freetimetmp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="freetimetmpid != null" >
+        freetimetmpid,
+      </if>
+      <if test="orduserid != null" >
+        orduserid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="freetimetmpid != null" >
+        #{freetimetmpid,jdbcType=OTHER},
+      </if>
+      <if test="orduserid != null" >
+        #{orduserid,jdbcType=OTHER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Freetimetmp" >
+    update freetimetmp
+    <set >
+      <if test="orduserid != null" >
+        orduserid = #{orduserid,jdbcType=OTHER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where freetimetmpid = #{freetimetmpid,jdbcType=OTHER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Freetimetmp" >
+    update freetimetmp
+    set orduserid = #{orduserid,jdbcType=OTHER},
+      name = #{name,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where freetimetmpid = #{freetimetmpid,jdbcType=OTHER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimetmp
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimetmp
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from freetimetmp
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimetmp
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from freetimetmp
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

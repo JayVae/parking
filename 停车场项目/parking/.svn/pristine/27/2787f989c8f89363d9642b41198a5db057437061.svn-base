@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Propertyuser;
+
+public interface PropertyuserMapper {
+    int deleteByPrimaryKey(Integer propertyuserid);
+
+    int insert(Propertyuser record);
+
+    int insertSelective(Propertyuser record);
+
+    Propertyuser selectByPrimaryKey(Integer propertyuserid);
+
+    int updateByPrimaryKeySelective(Propertyuser record);
+
+    int updateByPrimaryKey(Propertyuser record);
+}

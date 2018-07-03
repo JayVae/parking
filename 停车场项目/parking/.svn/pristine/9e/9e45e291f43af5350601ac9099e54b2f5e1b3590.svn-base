@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.PropertyuserMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Propertyuser" >
+    <id column="propertyuserid" property="propertyuserid" jdbcType="OTHER" />
+    <result column="propertycompanyid" property="propertycompanyid" jdbcType="OTHER" />
+    <result column="propertyusername" property="propertyusername" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="loginpwd" property="loginpwd" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    propertyuserid, propertycompanyid, propertyusername, phone, address, note, loginname, 
+    loginpwd, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from propertyuser
+    where propertyuserid = #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from propertyuser
+    where propertyuserid = #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Propertyuser" >
+    insert into propertyuser (propertyuserid, propertycompanyid, 
+      propertyusername, phone, address, 
+      note, loginname, loginpwd, 
+      state)
+    values (#{propertyuserid, jdbcType=OTHER, javaType=java.lang.String}, #{propertycompanyid, jdbcType=OTHER, javaType=java.lang.String}, 
+      #{propertyusername,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, #{loginpwd,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Propertyuser" >
+    insert into propertyuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="propertyuserid != null" >
+        propertyuserid,
+      </if>
+      <if test="propertycompanyid != null" >
+        propertycompanyid,
+      </if>
+      <if test="propertyusername != null" >
+        propertyusername,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="loginpwd != null" >
+        loginpwd,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="propertyuserid != null" >
+        #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="propertycompanyid != null" >
+        #{propertycompanyid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="propertyusername != null" >
+        #{propertyusername,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginpwd != null" >
+        #{loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Propertyuser" >
+    update propertyuser
+    <set >
+      <if test="propertycompanyid != null" >
+        propertycompanyid = #{propertycompanyid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="propertyusername != null" >
+        propertyusername = #{propertyusername,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="loginpwd != null" >
+        loginpwd = #{loginpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where propertyuserid = #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Propertyuser" >
+    update propertyuser
+    set propertycompanyid = #{propertycompanyid, jdbcType=OTHER, javaType=java.lang.String},
+      propertyusername = #{propertyusername,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      loginname = #{loginname,jdbcType=VARCHAR},
+      loginpwd = #{loginpwd,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where propertyuserid = #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from propertyuser
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from propertyuser
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from propertyuser
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from propertyuser
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from propertyuser
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+</mapper>

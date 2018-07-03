@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Freetimebuckettmp;
+
+public interface FreetimebuckettmpMapper {
+    int deleteByPrimaryKey(Long freetimebuckettmpid);
+
+    int insert(Freetimebuckettmp record);
+
+    int insertSelective(Freetimebuckettmp record);
+
+    Freetimebuckettmp selectByPrimaryKey(Long freetimebuckettmpid);
+
+    int updateByPrimaryKeySelective(Freetimebuckettmp record);
+
+    int updateByPrimaryKey(Freetimebuckettmp record);
+}

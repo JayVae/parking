@@ -1,0 +1,428 @@
+package com.hu.parking.api.parkingSpace;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hu.parking.common.Page;
+import com.hu.parking.common.ResultCode;
+import com.hu.parking.entity.Freetimebuckettmp;
+import com.hu.parking.entity.Freetimebucket;
+import com.hu.parking.entity.Parkinglot;
+import com.hu.parking.entity.Parkingplace;
+import com.hu.parking.entity.Parkingplacefreetime;
+import com.hu.parking.entity.Permissions;
+import com.hu.parking.entity.Rentrecord;
+import com.hu.parking.service.msgPush.Message;
+import com.hu.parking.service.msgPush.MessagePushServiceHandler;
+import com.hu.parking.service.parkingSpace.ParkingplaceService;
+import com.hu.parking.service.parkingSpace.ParkingplacefreetimeService;
+import com.hu.parking.service.parkingSpace.RentrecordService;
+import com.hu.parking.service.parkingSpace.UploadService;
+import com.hu.parking.service.parkingSpace.UsercarService;
+import com.hu.parking.service.system.PermissionsService;
+import com.hu.parking.util.Identities;
+import com.hu.parking.util.JsonBinder;
+import com.hu.parking.vo.IncomeVo;
+
+/**
+ * 停车记录
+ * @author leeyuan
+ *
+ */
+@Controller
+@RequestMapping(value = "/api/rentrecord")
+public class RentrecordAPI {
+
+	@Autowired
+	RentrecordService rentrecordService;
+	
+	@Autowired
+	ParkingplacefreetimeService parkingplacefreetimeService;
+	
+	@Autowired
+	ParkingplaceService parkingplaceService;
+	
+	@Autowired
+	MessagePushServiceHandler messagePushServiceHandler;
+	
+	@Autowired
+	UsercarService usercarService;
+	
+	private static JsonBinder jsonBinder = JsonBinder.nonDefaultMapper();  
+	
+	/**
+	 * 用户的停车记录
+	 * @return
+	 */
+	@RequestMapping(value = "/list")
+	@ResponseBody
+	public List<Rentrecord> list(String orduserid, String parkingplaceid, String[] usercarids,  String begindate, String enddate, String sflag) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("orduserid", orduserid);
+		params.put("parkingplaceid", parkingplaceid);
+		params.put("usercarids", usercarids);
+		if (begindate!= null && !"".equals(begindate)) {
+			params.put("begindate", DateTime.parse(begindate).toDate());
+		}
+		if (enddate!= null && !"".equals(enddate)) {
+			params.put("enddate", DateTime.parse(enddate).plusDays(1).toDate());
+		}
+		if (sflag != null) {
+			//查询预约
+			if ("appointment".equals(sflag)) {
+				params.put("appointment", "t");
+				params.put("sortName", "appointmentbegintime");
+				params.put("sortOrder", "desc");
+			}
+		}
+		List<Rentrecord> rentrecordList = rentrecordService.findByParams(params);
+		return rentrecordList;
+	}
+	
+	@RequestMapping(value = "/find")
+	@ResponseBody
+	public List<Rentrecord> listByFreetimeid(String parkingplacefreetimeid) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("parkingplacefreetimeid", parkingplacefreetimeid);
+		List<Rentrecord> rentrecordList = rentrecordService.findByNParams(params);
+		return rentrecordList;
+	}
+	
+	/**
+	 * 停车记录详情
+	 * @return
+	 */
+	@RequestMapping(value = "/detaile")
+	@ResponseBody
+	public List<Rentrecord> detaile(String rentrecordid) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("rentrecordid", rentrecordid);
+		List<Rentrecord> rentrecordList = rentrecordService.findByParams(params);
+		return rentrecordList;
+	}
+
+	
+	
+	/**
+	 * 添加停车记录
+	 * @param parkingplacefreetimeid 车位空闲时间ID
+	 * @param usercarid 用户车辆ID
+	 * @param appointmenttime 预约创建时间
+	 * @param appointmentbegintime 预约开始时间
+	 * @param appointmentendtime 预约结束时间
+	 * @param factbegintime 实际开始时间
+	 * @param parkingplaceftbs 车位空闲时间段
+	 * @return
+	 */
+	@RequestMapping(value = "/insert")
+	@ResponseBody
+	public Map<String, Object> insert(Rentrecord rentrecord, String parkingplaceftbs) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = 0;
+			String rentrecordid = "";
+			if (parkingplaceftbs != null && !"".equals(parkingplaceftbs)) {
+				JavaType javaType = jsonBinder.contructCollectionType(List.class, Map.class);
+				List<Map<String, String>> parkingplaceftbList = (List<Map<String, String>>) jsonBinder.fromJson(parkingplaceftbs, javaType);
+//				for (int i = 0; i < parkingplaceftbList.size(); i++) {
+//					
+//				}
+				rentrecordid = Identities.uuid();
+				rentrecord.setRentrecordid(rentrecordid);
+				rentrecord.setAppointmenttime(new Date());
+				//模拟支付成功
+				rentrecord.setAcpaystate("1");
+				result = rentrecordService.insertSelective(rentrecord);
+			}
+			if (result == 0) {
+				resultMap.put("result", ResultCode.FAILURE);
+				resultMap.put("resultMsg", "停车失败！");
+			}else {
+				resultMap.put("result", ResultCode.SUCCESS);
+				resultMap.put("resultMsg", "停车成功！");
+				resultMap.put("rentrecordid", rentrecordid);
+			}
+		} catch (Exception e) {
+			resultMap.put("result", ResultCode.ERROR);
+			resultMap.put("resultMsg", "系统出现错误！");
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 用户支付预约费用
+	 * @param rentrecordid 车位空闲时间ID
+	 * @param appointmentcost 用户费用
+	 * @return
+	 */
+	@RequestMapping(value = "/acpay")
+	@ResponseBody
+	public Map<String, Object> acPay(Rentrecord rentrecord) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = 0;
+			//TODO 支付费用 （支付宝、微信支付···）
+			result = rentrecordService.updateByPrimaryKeySelective(rentrecord);
+			if (result == 0) {
+				resultMap.put("result", ResultCode.FAILURE);
+				resultMap.put("resultMsg", "预约费用付款失败！");
+			}else {
+				resultMap.put("result", ResultCode.SUCCESS);
+				resultMap.put("resultMsg", "预约费用付款成功！");
+			}
+		} catch (Exception e) {
+			resultMap.put("result", ResultCode.ERROR);
+			resultMap.put("resultMsg", "系统出现错误！");
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 停车确认
+	 * @param rentrecordid 停车ID
+	 * @return
+	 */
+	@RequestMapping(value = "/rentsure")
+	@ResponseBody
+	public Map<String, Object> rentSure(String rentrecordid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = 0;
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("rentrecordid", rentrecordid);
+			Rentrecord rentrecord = rentrecordService.findByNParams(paramMap).get(0);
+			
+			if (rentrecord == null) {
+				resultMap.put("result", ResultCode.ERROR);
+				resultMap.put("resultMsg", "该记录不存在！");
+				return resultMap;
+			}
+			if ("0".equals(rentrecord.getAcpaystate())) {
+				resultMap.put("result", ResultCode.FAILURE);
+				resultMap.put("resultMsg", "预约费未支付，请先支付预约费用！");
+				resultMap.put("acpaystate", "0");
+			} else if ("1".equals(rentrecord.getAcpaystate())) {
+				Rentrecord rentrecordN = new Rentrecord();
+				rentrecordN.setRentrecordid(rentrecord.getRentrecordid());
+				Date factbegintime = new Date();
+				rentrecordN.setFactbegintime(factbegintime);
+				result = rentrecordService.updateByPrimaryKeySelective(rentrecordN);
+				Parkingplace parkingplace = new Parkingplace();
+				parkingplace.setParkingplaceid(rentrecord.getParkingplaceid());
+				parkingplace.setUsestate("1");
+				parkingplaceService.updateByPrimaryKeySelective(parkingplace);
+				if (result == 0) {
+					resultMap.put("result", ResultCode.FAILURE);
+					resultMap.put("resultMsg", "停车确认失败！");
+					resultMap.put("acpaystate", "1");
+				}else {
+					Message message = new Message();
+					message.setMsgtype("1");
+					message.setMsgname("rentsure");
+					message.setMsgcontent(rentrecord.getCarnumber()+"请求进入停车场"+rentrecord.getParkingplaceno()+"车位！");
+					message.setMsgend("<e>");
+					messagePushServiceHandler.sendMsg(message);
+					resultMap.put("result", ResultCode.SUCCESS);
+					resultMap.put("resultMsg", "停车确认成功！");
+					resultMap.put("acpaystate", "1");
+					resultMap.put("factbegintime", factbegintime);
+				}
+			}
+			
+		} catch (Exception e) {
+			resultMap.put("result", ResultCode.ERROR);
+			resultMap.put("resultMsg", "系统出现错误！");
+		}
+		return resultMap;
+	}
+	
+	
+	/**
+	 * 停车结束
+	 * @param rentrecordid 停车ID
+	 * @return
+	 */
+	@RequestMapping(value = "/parkingover")
+	@ResponseBody
+	public Map<String, Object> pakingOver(String rentrecordid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = 0;
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("rentrecordid", rentrecordid);
+			Rentrecord rentrecord = rentrecordService.findByNParams(paramMap).get(0);
+			if (rentrecord == null) {
+				resultMap.put("result", ResultCode.ERROR);
+				resultMap.put("resultMsg", "该记录不存在！");
+				return resultMap;
+			}else {
+				Date factendtime = new Date();
+				Date factbegintime = rentrecord.getFactbegintime();
+				long huors =(factendtime.getTime() - factbegintime.getTime())/(60 * 60 * 1000);
+//				Parkingplacefreetime parkingplacefreetime = parkingplacefreetimeService.selectByPrimaryKey(rentrecord.getParkingplacefreetimeid());
+				//TODO 计费
+				double payablecost = huors * 2.0;
+				double paidcost = payablecost;
+				rentrecord.setFactendtime(factendtime);
+				rentrecord.setPayablecost(payablecost);
+				rentrecord.setPaidcost(paidcost);
+//				rentrecord.setIspay("1");
+				result = rentrecordService.updateByPrimaryKeySelective(rentrecord);
+				if (result == 0) {
+					resultMap.put("result", ResultCode.FAILURE);
+					resultMap.put("resultMsg", "出库失败！");
+				}else {
+					Message message = new Message();
+					message.setMsgtype("1");
+					message.setMsgname("oversure");
+					message.setMsgcontent(rentrecord.getCarnumber()+"请求离开停车场"+rentrecord.getParkingplaceno()+"车位！");
+					message.setMsgend("<e>");
+					messagePushServiceHandler.sendMsg(message);
+					resultMap.put("result", ResultCode.SUCCESS);
+					resultMap.put("resultMsg", "出库成功，请缴费！");
+					resultMap.put("rentrecord", rentrecord);
+				}
+			}
+		} catch (Exception e) {
+			resultMap.put("result", ResultCode.ERROR);
+			resultMap.put("resultMsg", "系统出现错误！");
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 支付费用
+	 * @param rentrecordid 停车ID
+	 * @return
+	 */
+	@RequestMapping(value = "/paypaidcost")
+	@ResponseBody
+	public Map<String, Object> payPaidCost(String rentrecordid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = 0;
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("rentrecordid", rentrecordid);
+			Rentrecord rentrecord = rentrecordService.findByNParams(paramMap).get(0);
+			if (rentrecord == null) {
+				resultMap.put("result", ResultCode.ERROR);
+				resultMap.put("resultMsg", "该记录不存在！");
+				return resultMap;
+			}else {
+				//TODO 支付
+				//模拟支付成功
+				rentrecord.setIspay("1");
+				result = rentrecordService.updateByPrimaryKeySelective(rentrecord);
+				if (result == 0) {
+					resultMap.put("result", ResultCode.FAILURE);
+					resultMap.put("resultMsg", "支付失败！");
+				}else {
+					resultMap.put("result", ResultCode.SUCCESS);
+					resultMap.put("resultMsg", "支付成功！");
+				}
+			}
+		} catch (Exception e) {
+			resultMap.put("result", ResultCode.ERROR);
+			resultMap.put("resultMsg", "系统出现错误！");
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 出车确认
+	 * @param rentrecordid 停车ID
+	 * @return
+	 */
+	@RequestMapping(value = "/oversure")
+	@ResponseBody
+	public Map<String, Object> parkingOverSure(String rentrecordid) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			int result = 0;
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("rentrecordid", rentrecordid);
+			Rentrecord rentrecord = rentrecordService.findByNParams(paramMap).get(0);
+			if (rentrecord == null) {
+				resultMap.put("result", ResultCode.ERROR);
+				resultMap.put("resultMsg", "该记录不存在！");
+				return resultMap;
+			}
+			if ("0".equals(rentrecord.getIspay()) || rentrecord.getIspay() ==null) {
+				resultMap.put("result", ResultCode.FAILURE);
+				resultMap.put("resultMsg", "费用未支付，请支付费用！");
+				resultMap.put("ispay", "0");
+			} else if ("1".equals(rentrecord.getAcpaystate())) {
+				Rentrecord rentrecordN = new Rentrecord();
+				rentrecordN.setRentrecordid(rentrecord.getRentrecordid());
+				rentrecordN.setFactbegintime(new Date());
+				result = rentrecordService.updateByPrimaryKeySelective(rentrecordN);
+				Parkingplace parkingplace = new Parkingplace();
+				parkingplace.setParkingplaceid(rentrecord.getParkingplaceid());
+				parkingplace.setUsestate("2");
+				parkingplaceService.updateByPrimaryKeySelective(parkingplace);
+				if (result == 0) {
+					resultMap.put("result", ResultCode.FAILURE);
+					resultMap.put("resultMsg", "出车确认失败！");
+					resultMap.put("ispay", "1");
+				}else {
+					
+					resultMap.put("result", ResultCode.SUCCESS);
+					resultMap.put("resultMsg", "出车确认成功！");
+					resultMap.put("ispay", "1");
+				}
+			}
+		} catch (Exception e) {
+			resultMap.put("result", ResultCode.ERROR);
+			resultMap.put("resultMsg", "系统出现错误！");
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 用户收入汇总
+	 * @param beginDate
+	 * @param endDate
+	 * @param parkingplaceid
+	 * @return
+	 */
+	@RequestMapping(value = "/income")
+	@ResponseBody
+	public List<IncomeVo> sumOfIncome(String begindate, String enddate, String[] parkingplaceids){
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (begindate!= null && !"".equals(begindate)) {
+			params.put("begindate", DateTime.parse(begindate).toDate());
+		}
+		if (enddate!= null && !"".equals(enddate)) {
+			params.put("enddate", DateTime.parse(enddate).plusDays(1).toDate());
+		}
+		params.put("parkingplaceids", parkingplaceids);
+		List<IncomeVo> rList = rentrecordService.sumOfIncome(params);
+		return rList;
+	}
+
+	
+}

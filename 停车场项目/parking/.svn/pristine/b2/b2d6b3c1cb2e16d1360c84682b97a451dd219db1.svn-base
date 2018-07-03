@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Usercoupon;
+
+public interface UsercouponMapper {
+    int deleteByPrimaryKey(Integer usercouponid);
+
+    int insert(Usercoupon record);
+
+    int insertSelective(Usercoupon record);
+
+    Usercoupon selectByPrimaryKey(Integer usercouponid);
+
+    int updateByPrimaryKeySelective(Usercoupon record);
+
+    int updateByPrimaryKey(Usercoupon record);
+}

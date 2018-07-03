@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Propertycompany;
+
+public interface PropertycompanyMapper {
+    int deleteByPrimaryKey(Integer propertycompanyid);
+
+    int insert(Propertycompany record);
+
+    int insertSelective(Propertycompany record);
+
+    Propertycompany selectByPrimaryKey(Integer propertycompanyid);
+
+    int updateByPrimaryKeySelective(Propertycompany record);
+
+    int updateByPrimaryKey(Propertycompany record);
+}

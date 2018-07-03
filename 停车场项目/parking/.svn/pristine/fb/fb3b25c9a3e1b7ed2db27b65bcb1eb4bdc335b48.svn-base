@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Parkingplaceftb;
+
+public interface ParkingplaceftbMapper {
+    int deleteByPrimaryKey(Integer parkingplaceftbid);
+
+    int insert(Parkingplaceftb record);
+
+    int insertSelective(Parkingplaceftb record);
+
+    Parkingplaceftb selectByPrimaryKey(Integer parkingplaceftbid);
+
+    int updateByPrimaryKeySelective(Parkingplaceftb record);
+
+    int updateByPrimaryKey(Parkingplaceftb record);
+}

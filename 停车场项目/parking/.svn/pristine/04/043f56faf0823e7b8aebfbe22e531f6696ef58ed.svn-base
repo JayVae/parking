@@ -1,0 +1,12 @@
+package com.hu.parking.service.parkingSpace.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.hu.parking.entity.Rentrecord;
+import com.hu.parking.service.base.BaseServiceImpl;
+import com.hu.parking.service.parkingSpace.RentrecordService;
+
+@Service("rentrecordService")
+public class RentrecordServiceImpl extends BaseServiceImpl<Rentrecord> implements RentrecordService {
+	
+}

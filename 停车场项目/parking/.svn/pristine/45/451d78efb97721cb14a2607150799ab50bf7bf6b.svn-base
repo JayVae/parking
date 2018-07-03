@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.parkingSpace.ParkingplaceMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkingplace" >
+    <id column="parkingplaceid" property="parkingplaceid" jdbcType="OTHER" />
+    <result column="parkinglotsliceid" property="parkinglotsliceid" jdbcType="OTHER" />
+    <result column="orduserid" property="orduserid" jdbcType="OTHER" />
+    <result column="regtime" property="regtime" jdbcType="DATE" />
+    <result column="usestate" property="usestate" jdbcType="VARCHAR" />
+    <result column="positionofmap" property="positionofmap" jdbcType="VARCHAR" />
+    <result column="parkingplaceno" property="parkingplaceno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkingplaceid, parkinglotsliceid, orduserid, regtime, usestate, positionofmap, parkingplaceno
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkingplace
+    where parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parkingplace
+    where parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkingplace" >
+    insert into parkingplace (parkingplaceid, parkinglotsliceid, 
+      orduserid, regtime, usestate, 
+      positionofmap,parkingplaceno)
+    values (#{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}, #{parkinglotsliceid, jdbcType=OTHER, javaType=java.lang.String}, 
+      #{orduserid, jdbcType=OTHER, javaType=java.lang.String}, #{regtime,jdbcType=DATE}, #{usestate,jdbcType=VARCHAR}, 
+      #{positionofmap,jdbcType=VARCHAR},#{parkingplaceno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkingplace" >
+    insert into parkingplace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkingplaceid != null" >
+        parkingplaceid,
+      </if>
+      <if test="parkinglotsliceid != null" >
+        parkinglotsliceid,
+      </if>
+      <if test="orduserid != null" >
+        orduserid,
+      </if>
+      <if test="regtime != null" >
+        regtime,
+      </if>
+      <if test="usestate != null" >
+        usestate,
+      </if>
+      <if test="positionofmap != null" >
+        positionofmap,
+      </if>
+      <if test="parkingplaceno != null" >
+        parkingplaceno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkingplaceid != null" >
+        #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkinglotsliceid != null" >
+        #{parkinglotsliceid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="orduserid != null" >
+        #{orduserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=DATE},
+      </if>
+      <if test="usestate != null" >
+        #{usestate,jdbcType=VARCHAR},
+      </if>
+      <if test="positionofmap != null" >
+        #{positionofmap,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingplaceno != null" >
+        #{parkingplaceno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkingplace" >
+    update parkingplace
+    <set >
+      <if test="parkinglotsliceid != null" >
+        parkinglotsliceid = #{parkinglotsliceid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="orduserid != null" >
+        orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="regtime != null" >
+        regtime = #{regtime,jdbcType=DATE},
+      </if>
+      <if test="usestate != null" >
+        usestate = #{usestate,jdbcType=VARCHAR},
+      </if>
+      <if test="positionofmap != null" >
+        positionofmap = #{positionofmap,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingplaceno != null" >
+        parkingplaceno = #{parkingplaceno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkingplace" >
+    update parkingplace
+    set parkinglotsliceid = #{parkinglotsliceid, jdbcType=OTHER, javaType=java.lang.String},
+      orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String},
+      regtime = #{regtime,jdbcType=DATE},
+      usestate = #{usestate,jdbcType=VARCHAR},
+      positionofmap = #{positionofmap,jdbcType=VARCHAR},
+      parkingplaceno = #{parkingplaceno,jdbcType=VARCHAR}
+    where parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplace
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    parkingplaceid, pp.parkinglotsliceid, pp.orduserid, regtime, usestate, positionofmap, parkingplaceno, parkinglotname, slicename, realname
+    from parkingplace as pp 
+    inner join parkinglotslice as pls on  pp.parkinglotsliceid = pls.parkinglotsliceid
+    inner join parkinglot as pl on pls.parkinglotid = pl.parkinglotid
+    left join orduser as ou on pp.orduserid = ou.orduserid
+    <where>
+    	<if test="parkinglotid != null">
+    		and pl.parkinglotid = #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="parkinglotsliceid != null">
+    		and pls.parkinglotsliceid = #{parkinglotsliceid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="usestate != null">
+    		and usestate = #{usestate}
+    	</if>
+    	<if test="parkingplaceno != null">
+    		and parkingplaceno like '%'||#{parkingplaceno}||'%'
+    	</if>
+    	<if test="orduserid != null">
+    		and pp.orduserid  = #{orduserid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="approval != null">
+    		and pp.orduserid  is null
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*)
+    from parkingplace as pp 
+    inner join parkinglotslice as pls on  pp.parkinglotsliceid = pls.parkinglotsliceid
+    inner join parkinglot as pl on pls.parkinglotid = pl.parkinglotid
+    left join orduser as ou on pp.orduserid = ou.orduserid
+    <where>
+    	<if test="parkinglotid != null">
+    		and pl.parkinglotid = #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="parkinglotsliceid != null">
+    		and pls.parkinglotsliceid = #{parkinglotsliceid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="usestate != null">
+    		and usestate = #{usestate}
+    	</if>
+    	<if test="parkingplaceno != null">
+    		and parkingplaceno like '%'||#{parkingplaceno}||'%'
+    	</if>
+    	<if test="orduserid != null">
+    		and pp.orduserid  = #{orduserid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    </where>
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplace
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplace
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue, jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+</mapper>

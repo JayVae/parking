@@ -1,0 +1,81 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Parkingplacefreetime implements Serializable {
+    private Integer parkingplacefreetimeid;
+
+    private Integer parkingplaceid;
+
+    private Date freedata;
+
+    private Double totalhour;
+
+    private String usestate;
+
+    private String isvalid;
+
+    private String isused;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getParkingplacefreetimeid() {
+        return parkingplacefreetimeid;
+    }
+
+    public void setParkingplacefreetimeid(Integer parkingplacefreetimeid) {
+        this.parkingplacefreetimeid = parkingplacefreetimeid;
+    }
+
+    public Integer getParkingplaceid() {
+        return parkingplaceid;
+    }
+
+    public void setParkingplaceid(Integer parkingplaceid) {
+        this.parkingplaceid = parkingplaceid;
+    }
+
+    public Date getFreedata() {
+        return freedata;
+    }
+
+    public void setFreedata(Date freedata) {
+        this.freedata = freedata;
+    }
+
+    public Double getTotalhour() {
+        return totalhour;
+    }
+
+    public void setTotalhour(Double totalhour) {
+        this.totalhour = totalhour;
+    }
+
+    public String getUsestate() {
+        return usestate;
+    }
+
+    public void setUsestate(String usestate) {
+        this.usestate = usestate == null ? null : usestate.trim();
+    }
+
+    public String getIsvalid() {
+        return isvalid;
+    }
+
+    public void setIsvalid(String isvalid) {
+        this.isvalid = isvalid == null ? null : isvalid.trim();
+    }
+
+    public String getIsused() {
+        return isused;
+    }
+
+    public void setIsused(String isused) {
+        this.isused = isused == null ? null : isused.trim();
+    }
+}

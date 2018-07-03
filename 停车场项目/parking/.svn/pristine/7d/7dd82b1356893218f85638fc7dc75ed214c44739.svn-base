@@ -1,0 +1,77 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+
+public class Propertycompany implements Serializable {
+    private Integer propertycompanyid;
+
+    private String pcompanyname;
+
+    private String commerlicens;
+
+    private String legalname;
+
+    private String phone;
+
+    private String address;
+
+    private String note;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getPropertycompanyid() {
+        return propertycompanyid;
+    }
+
+    public void setPropertycompanyid(Integer propertycompanyid) {
+        this.propertycompanyid = propertycompanyid;
+    }
+
+    public String getPcompanyname() {
+        return pcompanyname;
+    }
+
+    public void setPcompanyname(String pcompanyname) {
+        this.pcompanyname = pcompanyname == null ? null : pcompanyname.trim();
+    }
+
+    public String getCommerlicens() {
+        return commerlicens;
+    }
+
+    public void setCommerlicens(String commerlicens) {
+        this.commerlicens = commerlicens == null ? null : commerlicens.trim();
+    }
+
+    public String getLegalname() {
+        return legalname;
+    }
+
+    public void setLegalname(String legalname) {
+        this.legalname = legalname == null ? null : legalname.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note == null ? null : note.trim();
+    }
+}

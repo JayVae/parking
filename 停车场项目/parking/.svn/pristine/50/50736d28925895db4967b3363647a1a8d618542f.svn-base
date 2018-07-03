@@ -1,0 +1,25 @@
+# database settings
+jdbc.driver=org.postgresql.Driver
+#jdbc.url=jdbc:postgresql://192.168.1.138:5432/test1
+
+#jdbc.url=jdbc:postgresql://localhost:5432/sanfentdb
+#jdbc.username=postgres
+#jdbc.password=ly_13892896687
+
+jdbc.url=jdbc:postgresql://localhost:5433/parking1
+jdbc.username=admin1
+jdbc.password=123456
+
+#connection pool settings
+jdbc.pool.maxIdle=10
+jdbc.pool.maxActive=50
+
+
+#jms setting
+jms.broker_url = failover:(tcp://localhost:61616)
+
+#mybatis generator
+project = parking/src/main/java
+projectResources = parking/src/main/resources
+classPath=C:/Users/leeyuan/.m2/repository/org/postgresql/postgresql/9.4-1201-jdbc41/postgresql-9.4-1201-jdbc41.jar
+

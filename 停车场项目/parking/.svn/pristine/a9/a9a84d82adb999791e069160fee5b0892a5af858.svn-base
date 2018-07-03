@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.parkingSpace.ParkingplacefreetimeMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkingplacefreetime" >
+    <id column="parkingplacefreetimeid" property="parkingplacefreetimeid" jdbcType="INTEGER" />
+    <result column="parkingplaceid" property="parkingplaceid" jdbcType="INTEGER" />
+    <result column="freedata" property="freedata" jdbcType="DATE" />
+    <result column="totalhour" property="totalhour" jdbcType="DOUBLE" />
+    <result column="usestate" property="usestate" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="VARCHAR" />
+    <result column="isused" property="isused" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkingplacefreetimeid, parkingplaceid, freedata, totalhour, usestate, isvalid, isused
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from parkingplacefreetime
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    insert into parkingplacefreetime (parkingplacefreetimeid, parkingplaceid, 
+      freedata, totalhour, usestate, 
+      isvalid, isused)
+    values (#{parkingplacefreetimeid,jdbcType=INTEGER}, #{parkingplaceid,jdbcType=INTEGER}, 
+      #{freedata,jdbcType=DATE}, #{totalhour,jdbcType=DOUBLE}, #{usestate,jdbcType=VARCHAR}, 
+      #{isvalid,jdbcType=VARCHAR}, #{isused,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkingplacefreetime"  keyProperty="parkingplacefreetimeid">
+  	<selectKey order="AFTER" keyProperty="parkingplacefreetimeid" resultType="java.lang.Integer">
+    	SELECT currval('parkingplacefreetime_parkingplacefreetimeid_seq') as parkingplacefreetimeid
+	</selectKey>
+    insert into parkingplacefreetime
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkingplacefreetimeid != null" >
+        parkingplacefreetimeid,
+      </if>
+      <if test="parkingplaceid != null" >
+        parkingplaceid,
+      </if>
+      <if test="freedata != null" >
+        freedata,
+      </if>
+      <if test="totalhour != null" >
+        totalhour,
+      </if>
+      <if test="usestate != null" >
+        usestate,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+      <if test="isused != null" >
+        isused,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkingplacefreetimeid != null" >
+        #{parkingplacefreetimeid,jdbcType=INTEGER},
+      </if>
+      <if test="parkingplaceid != null" >
+        #{parkingplaceid,jdbcType=INTEGER},
+      </if>
+      <if test="freedata != null" >
+        #{freedata,jdbcType=DATE},
+      </if>
+      <if test="totalhour != null" >
+        #{totalhour,jdbcType=DOUBLE},
+      </if>
+      <if test="usestate != null" >
+        #{usestate,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=VARCHAR},
+      </if>
+      <if test="isused != null" >
+        #{isused,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    update parkingplacefreetime
+    <set >
+      <if test="parkingplaceid != null" >
+        parkingplaceid = #{parkingplaceid,jdbcType=INTEGER},
+      </if>
+      <if test="freedata != null" >
+        freedata = #{freedata,jdbcType=DATE},
+      </if>
+      <if test="totalhour != null" >
+        totalhour = #{totalhour,jdbcType=DOUBLE},
+      </if>
+      <if test="usestate != null" >
+        usestate = #{usestate,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=VARCHAR},
+      </if>
+      <if test="isused != null" >
+        isused = #{isused,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkingplacefreetime" >
+    update parkingplacefreetime
+    set parkingplaceid = #{parkingplaceid,jdbcType=INTEGER},
+      freedata = #{freedata,jdbcType=DATE},
+      totalhour = #{totalhour,jdbcType=DOUBLE},
+      usestate = #{usestate,jdbcType=VARCHAR},
+      isvalid = #{isvalid,jdbcType=VARCHAR},
+      isused = #{isused,jdbcType=VARCHAR}
+    where parkingplacefreetimeid = #{parkingplacefreetimeid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    <where>
+    	<if test="parkingplaceid != null">
+    		and parkingplaceid = #{parkingplaceid}
+    	</if>
+    	<if test="freedata != null">
+    		and freedata = #{freedata}
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplacefreetime
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplacefreetime
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplacefreetime
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

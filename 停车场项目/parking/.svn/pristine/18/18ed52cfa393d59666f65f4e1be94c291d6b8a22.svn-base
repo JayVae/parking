@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Parkingplacefreetime;
+
+public interface ParkingplacefreetimeMapper {
+    int deleteByPrimaryKey(Object parkingplacefreetimeid);
+
+    int insert(Parkingplacefreetime record);
+
+    int insertSelective(Parkingplacefreetime record);
+
+    Parkingplacefreetime selectByPrimaryKey(Object parkingplacefreetimeid);
+
+    int updateByPrimaryKeySelective(Parkingplacefreetime record);
+
+    int updateByPrimaryKey(Parkingplacefreetime record);
+}

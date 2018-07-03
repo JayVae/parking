@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.parkingSpace.ParkingplaceapprovalMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkingplaceapproval" >
+    <id column="parkingplaceapprovalid" property="parkingplaceapprovalid" jdbcType="OTHER" />
+    <result column="parkingplaceid" property="parkingplaceid" jdbcType="OTHER" />
+    <result column="orduserid" property="orduserid" jdbcType="OTHER" />
+    <result column="propertyuserid" property="propertyuserid" jdbcType="OTHER" />
+    <result column="sysuserid" property="sysuserid" jdbcType="OTHER" />
+    <result column="approvalstate" property="approvalstate" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="applytime" property="applytime" jdbcType="TIMESTAMP" />
+    <result column="approvaltime" property="approvaltime" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkingplaceapprovalid, parkingplaceid, orduserid, propertyuserid, sysuserid, approvalstate, 
+    reason, applytime, approvaltime, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkingplaceapproval
+    where parkingplaceapprovalid = #{parkingplaceapprovalid, jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parkingplaceapproval
+    where parkingplaceapprovalid = #{parkingplaceapprovalid, jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkingplaceapproval" >
+    insert into parkingplaceapproval (parkingplaceapprovalid, parkingplaceid, 
+      orduserid, propertyuserid, sysuserid, 
+      approvalstate, reason, applytime, 
+      approvaltime, note)
+    values (#{parkingplaceapprovalid, jdbcType=OTHER, javaType=java.lang.String}, #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String}, 
+      #{orduserid, jdbcType=OTHER, javaType=java.lang.String}, #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String}, #{sysuserid, jdbcType=OTHER, javaType=java.lang.String}, 
+      #{approvalstate,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{applytime,jdbcType=TIMESTAMP}, 
+      #{approvaltime,jdbcType=TIMESTAMP}, #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkingplaceapproval" >
+    insert into parkingplaceapproval
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkingplaceapprovalid != null" >
+        parkingplaceapprovalid,
+      </if>
+      <if test="parkingplaceid != null" >
+        parkingplaceid,
+      </if>
+      <if test="orduserid != null" >
+        orduserid,
+      </if>
+      <if test="propertyuserid != null" >
+        propertyuserid,
+      </if>
+      <if test="sysuserid != null" >
+        sysuserid,
+      </if>
+      <if test="approvalstate != null" >
+        approvalstate,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="applytime != null" >
+        applytime,
+      </if>
+      <if test="approvaltime != null" >
+        approvaltime,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkingplaceapprovalid != null" >
+        #{parkingplaceapprovalid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkingplaceid != null" >
+        #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="orduserid != null" >
+        #{orduserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="propertyuserid != null" >
+        #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="sysuserid != null" >
+        #{sysuserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="approvalstate != null" >
+        #{approvalstate,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="applytime != null" >
+        #{applytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvaltime != null" >
+        #{approvaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkingplaceapproval" >
+    update parkingplaceapproval
+    <set >
+      <if test="parkingplaceid != null" >
+        parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="orduserid != null" >
+        orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="propertyuserid != null" >
+        propertyuserid = #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="sysuserid != null" >
+        sysuserid = #{sysuserid, jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="approvalstate != null" >
+        approvalstate = #{approvalstate,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="applytime != null" >
+        applytime = #{applytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvaltime != null" >
+        approvaltime = #{approvaltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parkingplaceapprovalid = #{parkingplaceapprovalid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkingplaceapproval" >
+    update parkingplaceapproval
+    set parkingplaceid = #{parkingplaceid, jdbcType=OTHER, javaType=java.lang.String},
+      orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String},
+      propertyuserid = #{propertyuserid, jdbcType=OTHER, javaType=java.lang.String},
+      sysuserid = #{sysuserid, jdbcType=OTHER, javaType=java.lang.String},
+      approvalstate = #{approvalstate,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      applytime = #{applytime,jdbcType=TIMESTAMP},
+      approvaltime = #{approvaltime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR}
+    where parkingplaceapprovalid = #{parkingplaceapprovalid, jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplaceapproval
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    SELECT parkingplaceapprovalid, ppa.parkingplaceid, ppa.orduserid, propertyuserid, sysuserid, approvalstate, 
+    		reason, applytime, approvaltime, ppa.note, ou.realname, ou.phone, pp.parkingplaceno, ps.slicename,pl.parkinglotname
+	FROM parkingplaceapproval as ppa 
+	INNER JOIN orduser as ou on ppa.orduserid = ou.orduserid
+	INNER JOIN parkingplace as pp on ppa.parkingplaceid = pp.parkingplaceid
+	INNER JOIN parkinglotslice as ps on pp.parkinglotsliceid = ps.parkinglotsliceid
+	INNER JOIN parkinglot as pl on ps.parkinglotid = pl.parkinglotid
+	<where>
+		<if test="orduserid != null">
+			and ou.orduserid = #{orduserid, jdbcType=OTHER, javaType=java.lang.String}
+		</if>
+		<if test="approvalstate != null">
+			and ppa.approvalstate = #{approvalstate}
+		</if>
+	</where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplaceapproval
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkingplaceapproval
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkingplaceapproval
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

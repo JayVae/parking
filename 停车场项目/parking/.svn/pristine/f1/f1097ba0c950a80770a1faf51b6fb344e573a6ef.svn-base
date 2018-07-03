@@ -1,0 +1,12 @@
+package com.hu.parking.service.parkingSpace.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.hu.parking.entity.Parkingplaceftb;
+import com.hu.parking.service.base.BaseServiceImpl;
+import com.hu.parking.service.parkingSpace.ParkingplaceftbService;
+
+@Service("ParkingplaceftbService")
+public class ParkingplaceftbServiceImpl extends BaseServiceImpl<Parkingplaceftb> implements ParkingplaceftbService {
+	
+}

@@ -1,0 +1,270 @@
+package com.hu.parking.controller.parkingSpace;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.hu.parking.common.Page;
+import com.hu.parking.common.ResultCode;
+import com.hu.parking.entity.Parkinglot;
+import com.hu.parking.entity.Parkinglotslice;
+import com.hu.parking.entity.Permissions;
+import com.hu.parking.service.parkingSpace.ParkinglotService;
+import com.hu.parking.service.parkingSpace.ParkinglotsliceService;
+import com.hu.parking.service.parkingSpace.UploadService;
+import com.hu.parking.service.system.PermissionsService;
+import com.hu.parking.util.Identities;
+
+@Controller
+@RequestMapping(value = "/parkinglot")
+public class ParkinglotController {
+
+	@Autowired
+	ParkinglotService parkinglotService;
+
+	@Autowired
+	ParkinglotsliceService parkinglotsliceService;
+	
+	@Autowired
+	UploadService uploadService;
+
+	@Autowired
+	Parkinglot parkinglot;
+
+	@Autowired
+	Parkinglotslice parkinglotslice;
+	
+	//构建图片保存的目录
+	final String filePathDir = "mapfiles";
+
+	@RequestMapping(value = "")
+	public String parkinglotList() {
+		return "parkingSpace/parkinglotList";
+	}
+
+	@RequestMapping(value = "/list")
+	@ResponseBody
+	public Map<String, Object> list(Page page) {
+		return parkinglotService.pagedByParams(page);
+	}
+
+	@RequestMapping(value = "/parkinglots")
+	@ResponseBody
+	public List<Parkinglot> parkinglots() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("state", "1");
+		List<Parkinglot> parkinglots = parkinglotService.findByParams(params);
+		return parkinglots;
+	}
+
+	@RequestMapping(value = "/info")
+	public String info() {
+		return "parkingSpace/parkinglotInfo";
+	}
+
+	@RequestMapping(value = "/insert")
+	@ResponseBody
+	public Map<String, Object> insert(Parkinglot parkinglot) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		parkinglotService.insertSelective(parkinglot);
+		result.put("result", ResultCode.SUCCESS);
+		result.put("resultMsg", "添加停车场成功！");
+		return result;
+	}
+
+	@RequestMapping(value = "/{parkinglotid}/edit")
+	@ResponseBody
+	public Parkinglot edit(@PathVariable("parkinglotid") Integer parkinglotid) {
+		return parkinglotService.selectByPrimaryKey(parkinglotid);
+	}
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> update(Parkinglot parkinglot) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int row = parkinglotService.updateByPrimaryKeySelective(parkinglot);
+		if (row == 1) {
+			result.put("result", ResultCode.SUCCESS);
+			result.put("resultMsg", "修改停车场成功！");
+		} else {
+			result.put("result", ResultCode.FAILURE);
+			result.put("resultMsg", "该停车场已不存在！");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/{parkinglotid}/view")
+	@ResponseBody
+	public Parkinglot view(@PathVariable("parkinglotid") Integer parkinglotid) {
+		parkinglot = parkinglotService.selectByPrimaryKey(parkinglotid);
+		return parkinglot;
+	}
+
+	@RequestMapping(value = "/{parkinglotid}/delete")
+	@ResponseBody
+	public Map<String, Object> delete(
+			@PathVariable("parkinglotid") Integer parkinglotid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int row = parkinglotService.deleteByPrimaryKey(parkinglotid);
+		if (row == 1) {
+			result.put("result", ResultCode.SUCCESS);
+			result.put("resultMsg", "删除停车场成功！");
+		} else {
+			result.put("result", ResultCode.FAILURE);
+			result.put("resultMsg", "该停车场已不存在！");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/isexist")
+	@ResponseBody
+	public String isExist(String parkinglotname, Integer parkinglotid) {
+		int result = parkinglotService.findByKeyCount("parkinglotname",
+				parkinglotname, "parkinglotid", parkinglotid);
+		if (result == 0) {
+			return ResultCode.UNEXIST;
+		} else {
+			return ResultCode.EXIST;
+		}
+	}
+
+	
+
+	@RequestMapping(value = "/slice/list")
+	@ResponseBody
+	public List<Parkinglotslice> parkinglotslices(Integer parkinglotid) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("parkinglotid", parkinglotid);
+		List<Parkinglotslice> parkinglotslices = parkinglotsliceService
+				.findByParams(params);
+		return parkinglotslices;
+	}
+
+	@RequestMapping(value = "slice/info")
+	public String sliceinfo(String opt, String slicemap, Model model) {
+		model.addAttribute("opt", opt);
+		model.addAttribute("slicemap",slicemap);
+		return "parkingSpace/parkinglotsliceInfo";
+	}
+	
+	@RequestMapping(value = "slice/{parkinglotsliceid}")
+	@ResponseBody
+	public Parkinglotslice editSlice(@PathVariable("parkinglotsliceid") Integer parkinglotsliceid) {
+		return parkinglotsliceService.selectByPrimaryKey(parkinglotsliceid);
+	}
+
+	@RequestMapping(value = "slice/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateSlice(@RequestParam(value="mapfile", required=true)CommonsMultipartFile[] mapfile, 
+			String slicename, String note, Integer parkinglotsliceid, HttpServletRequest request) {
+		//得到图片保存目录的真实路径 
+				String fileRealPathDir = "";
+				try {
+					fileRealPathDir = request.getSession().getServletContext().getResource("/").getPath()+filePathDir;
+				} catch (MalformedURLException e1) {
+					e1.printStackTrace();
+				}
+				Map<String, Object> result = new HashMap<String, Object>();
+				String 	newFilename = uploadService.upload(mapfile, fileRealPathDir);
+				if (!"".equals(newFilename)) {
+					parkinglotslice.setSlicemap(newFilename);
+				} 
+				if ("error".equals(newFilename)) {
+					result.put("result", ResultCode.ERROR);
+					result.put("resultMsg", "系统出现错误！");
+				}else {
+					parkinglotslice.setParkinglotsliceid(parkinglotsliceid);
+					parkinglotslice.setSlicemap(newFilename);
+					parkinglotslice.setNote(note);
+					if (parkinglotsliceService.updateByPrimaryKeySelective(parkinglotslice) == 1) {
+						result.put("result", ResultCode.SUCCESS);
+						result.put("resultMsg", "修改停车场分层成功！");
+					} else {
+						result.put("result", ResultCode.FAILURE);
+						result.put("resultMsg", "修改停车场分层失败！");
+					}
+				}
+				
+				return result;
+	}
+
+	@RequestMapping(value = "slice/{parkinglotsliceid}/delete")
+	@ResponseBody
+	public Map<String, Object> deleteSlice(
+			@PathVariable("parkinglotsliceid") Integer parkinglotsliceid) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int row = parkinglotsliceService.deleteByPrimaryKey(parkinglotsliceid);
+		if (row == 1) {
+			result.put("result", ResultCode.SUCCESS);
+			result.put("resultMsg", "删除停车场分层成功！");
+		} else {
+			result.put("result", ResultCode.FAILURE);
+			result.put("resultMsg", "该停车场分层已不存在！");
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "slice/isexist")
+	@ResponseBody
+	public String isExistSlice(String slicename, Integer parkinglotsliceid) {
+		int result = parkinglotsliceService.findByKeyCount("slicename",
+				slicename, "parkinglotsliceid", parkinglotsliceid);
+		if (result == 0) {
+			return ResultCode.UNEXIST;
+		} else {
+			return ResultCode.EXIST;
+		}
+	}
+
+	@RequestMapping("slicemap/insert")
+	@ResponseBody
+	public Map<String, Object> insertSlicemap(@RequestParam(value="mapfile", required=true)CommonsMultipartFile[] mapfile, 
+			String slicename, String note, Integer parkinglotid, HttpServletRequest request) {
+		//得到图片保存目录的真实路径 
+		String fileRealPathDir = "";
+		try {
+			fileRealPathDir = request.getSession().getServletContext().getResource("/").getPath()+filePathDir;
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		String 	newFilename = uploadService.upload(mapfile, fileRealPathDir);
+		if (!"".equals(newFilename)) {
+			parkinglotslice.setSlicemap(newFilename);
+		}
+		if ("error".equals(newFilename)) {
+			result.put("result", ResultCode.ERROR);
+			result.put("resultMsg", "系统出现错误！");
+		} else {
+			parkinglotslice.setParkinglotid(parkinglotid);
+			parkinglotslice.setSlicename(slicename);
+			parkinglotslice.setNote(note);
+			if (parkinglotsliceService.insertSelective(parkinglotslice) == 1) {
+				result.put("result", ResultCode.SUCCESS);
+				result.put("resultMsg", "添加停车场分层成功！");
+			} else {
+				result.put("result", ResultCode.FAILURE);
+				result.put("resultMsg", "添加停车场分层失败！");
+			}
+		}
+		
+		
+		
+		return result;
+	}
+}

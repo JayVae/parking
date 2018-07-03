@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Usercar;
+
+public interface UsercarMapper {
+    int deleteByPrimaryKey(Integer usercarid);
+
+    int insert(Usercar record);
+
+    int insertSelective(Usercar record);
+
+    Usercar selectByPrimaryKey(Integer usercarid);
+
+    int updateByPrimaryKeySelective(Usercar record);
+
+    int updateByPrimaryKey(Usercar record);
+}

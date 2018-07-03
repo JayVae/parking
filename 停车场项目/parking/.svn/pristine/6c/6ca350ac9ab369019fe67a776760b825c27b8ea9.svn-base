@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.SysparameterMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Sysparameter" >
+    <id column="sysparameterid" property="sysparameterid" jdbcType="INTEGER" />
+    <result column="sysparameterenname" property="sysparameterenname" jdbcType="VARCHAR" />
+    <result column="sysparametercnname" property="sysparametercnname" jdbcType="VARCHAR" />
+    <result column="sysparametervalue" property="sysparametervalue" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sysparameterid, sysparameterenname, sysparametercnname, sysparametervalue, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sysparameter
+    where sysparameterid = #{sysparameterid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sysparameter
+    where sysparameterid = #{sysparameterid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Sysparameter" >
+    insert into sysparameter (sysparameterid, sysparameterenname, 
+      sysparametercnname, sysparametervalue, 
+      note)
+    values (#{sysparameterid,jdbcType=INTEGER}, #{sysparameterenname,jdbcType=VARCHAR}, 
+      #{sysparametercnname,jdbcType=VARCHAR}, #{sysparametervalue,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Sysparameter" >
+    insert into sysparameter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysparameterid != null" >
+        sysparameterid,
+      </if>
+      <if test="sysparameterenname != null" >
+        sysparameterenname,
+      </if>
+      <if test="sysparametercnname != null" >
+        sysparametercnname,
+      </if>
+      <if test="sysparametervalue != null" >
+        sysparametervalue,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysparameterid != null" >
+        #{sysparameterid,jdbcType=INTEGER},
+      </if>
+      <if test="sysparameterenname != null" >
+        #{sysparameterenname,jdbcType=VARCHAR},
+      </if>
+      <if test="sysparametercnname != null" >
+        #{sysparametercnname,jdbcType=VARCHAR},
+      </if>
+      <if test="sysparametervalue != null" >
+        #{sysparametervalue,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Sysparameter" >
+    update sysparameter
+    <set >
+      <if test="sysparameterenname != null" >
+        sysparameterenname = #{sysparameterenname,jdbcType=VARCHAR},
+      </if>
+      <if test="sysparametercnname != null" >
+        sysparametercnname = #{sysparametercnname,jdbcType=VARCHAR},
+      </if>
+      <if test="sysparametervalue != null" >
+        sysparametervalue = #{sysparametervalue,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sysparameterid = #{sysparameterid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Sysparameter" >
+    update sysparameter
+    set sysparameterenname = #{sysparameterenname,jdbcType=VARCHAR},
+      sysparametercnname = #{sysparametercnname,jdbcType=VARCHAR},
+      sysparametervalue = #{sysparametervalue,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where sysparameterid = #{sysparameterid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from sysparameter
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from sysparameter
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from sysparameter
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from sysparameter
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from sysparameter
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

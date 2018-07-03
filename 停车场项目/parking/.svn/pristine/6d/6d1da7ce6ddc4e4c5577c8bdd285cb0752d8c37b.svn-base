@@ -1,0 +1,175 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Component
+public class Parkingplacefreetime implements Serializable {
+    private Object parkingplacefreetimeid;
+
+    private Object parkingplaceid;
+
+    private Object orduserid;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date freetimebucketbegin;
+    
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date freetimebucketend;
+
+    private String ruletype;
+
+    private Double unitprice;
+
+    private Float unittimelong;
+
+    private Double startprice;
+
+    private Float starttimelong;
+
+    private Double punishunitprice;
+
+    private Float punishunittimelong;
+
+    private String punishtype;
+
+    private String usestate;
+
+    private String isappointment;
+
+    private String isvalid;
+
+    private static final long serialVersionUID = 1L;
+
+    public Object getParkingplacefreetimeid() {
+        return parkingplacefreetimeid;
+    }
+
+    public void setParkingplacefreetimeid(Object parkingplacefreetimeid) {
+        this.parkingplacefreetimeid = parkingplacefreetimeid;
+    }
+
+    public Object getParkingplaceid() {
+        return parkingplaceid;
+    }
+
+    public void setParkingplaceid(Object parkingplaceid) {
+        this.parkingplaceid = parkingplaceid;
+    }
+
+    public Object getOrduserid() {
+        return orduserid;
+    }
+
+    public void setOrduserid(Object orduserid) {
+        this.orduserid = orduserid;
+    }
+
+    public Date getFreetimebucketbegin() {
+        return freetimebucketbegin;
+    }
+
+    public void setFreetimebucketbegin(Date freetimebucketbegin) {
+        this.freetimebucketbegin = freetimebucketbegin;
+    }
+
+    public Date getFreetimebucketend() {
+        return freetimebucketend;
+    }
+
+    public void setFreetimebucketend(Date freetimebucketend) {
+        this.freetimebucketend = freetimebucketend;
+    }
+
+    public String getRuletype() {
+        return ruletype;
+    }
+
+    public void setRuletype(String ruletype) {
+        this.ruletype = ruletype == null ? null : ruletype.trim();
+    }
+
+    public Double getUnitprice() {
+        return unitprice;
+    }
+
+    public void setUnitprice(Double unitprice) {
+        this.unitprice = unitprice;
+    }
+
+    public Float getUnittimelong() {
+        return unittimelong;
+    }
+
+    public void setUnittimelong(Float unittimelong) {
+        this.unittimelong = unittimelong;
+    }
+
+    public Double getStartprice() {
+        return startprice;
+    }
+
+    public void setStartprice(Double startprice) {
+        this.startprice = startprice;
+    }
+
+    public Float getStarttimelong() {
+        return starttimelong;
+    }
+
+    public void setStarttimelong(Float starttimelong) {
+        this.starttimelong = starttimelong;
+    }
+
+    public Double getPunishunitprice() {
+        return punishunitprice;
+    }
+
+    public void setPunishunitprice(Double punishunitprice) {
+        this.punishunitprice = punishunitprice;
+    }
+
+    public Float getPunishunittimelong() {
+        return punishunittimelong;
+    }
+
+    public void setPunishunittimelong(Float punishunittimelong) {
+        this.punishunittimelong = punishunittimelong;
+    }
+
+    public String getPunishtype() {
+        return punishtype;
+    }
+
+    public void setPunishtype(String punishtype) {
+        this.punishtype = punishtype == null ? null : punishtype.trim();
+    }
+
+    public String getUsestate() {
+        return usestate;
+    }
+
+    public void setUsestate(String usestate) {
+        this.usestate = usestate == null ? null : usestate.trim();
+    }
+
+    public String getIsappointment() {
+        return isappointment;
+    }
+
+    public void setIsappointment(String isappointment) {
+        this.isappointment = isappointment == null ? null : isappointment.trim();
+    }
+
+    public String getIsvalid() {
+        return isvalid;
+    }
+
+    public void setIsvalid(String isvalid) {
+        this.isvalid = isvalid == null ? null : isvalid.trim();
+    }
+}

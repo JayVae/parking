@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="no"?>
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="451" height="447">
+  <!--crest-->
+  <polygon class="crest" id="c-1" points="241,43 330,3 339,7"></polygon>
+  <polygon class="crest" id="c-2" points="327,21 327,12 339,7"></polygon>
+  <!--beak-->
+  <polygon class="beak" id="bk-1" points="360,31 366,31 442,94"></polygon>
+  <polygon class="beak" id="bk-2" points="351,31 360,31 442,94"></polygon>
+  <polygon class="beak" id="bk-3" points="344,37 351,31 442,94"></polygon>
+   <polygon class="beak" id="bk-4" points="340,41 344,37 442,94"></polygon>
+  <polygon class="beak" id="bk-5" points="337,46 340,41 392,68"></polygon>
+  <!--head-->
+  <polygon class="head" id="h-1" points="339,7 356,13 346,22"></polygon>
+  <polygon class="head" id="h-2" points="346,22 356,13 366,31"></polygon>
+  <polygon class="head" id="h-3" points="340,41 339,7 346,22"></polygon>
+  <polygon class="head" id="h-4" points="323,26 339,7 340,41"></polygon>
+  <polygon class="head" id="h-5" points="346,22 366,31 351,31"></polygon>
+   <polygon class="head" id="h-6" points="340,41 346,22 351,31"></polygon>
+  <polygon class="head" id="h-7" points="323,26 340,41 333,47"></polygon>
+  <polygon class="head" id="h-8" points="307,71 323,26 333,47"></polygon>
+  <polygon class="head" id="h-9" points="307,71 340,41 318,77"></polygon>
+  <polygon class="head" id="h-10" points="307,71 318,77 324,95"></polygon>
+  <polygon class="head" id="h-11" points="324,95 318,77 325,66"></polygon>
+  <polygon class="head" id="h-12" points="324,95 325,66 337,82"></polygon>
+  <polygon class="head" id="h-13" points="324,95 353,88 340,104"></polygon>
+  <polygon class="head" id="h-14" points="324,95 337,82 353,88"></polygon>
+  <polygon class="head" id="h-15" points="340,104 353,88 347,116"></polygon>
+  <polygon class="head" id="h-16" points="347,116 353,88 365,98"></polygon>
+  <polygon class="head" id="h-17" points="347,116 365,98 365,127"></polygon>
+  <polygon class="head" id="h-18" points="347,116 365,127 357,135"></polygon>
+  <polygon class="head" id="h-19" points="332,160 347,117 357,135"></polygon>
+  <polygon class="head" id="h-20" points="332,160 327,130 347,117"></polygon>
+  <polygon class="head" id="h-21" points="321,135 327,130 332,160"></polygon>
+  <polygon class="head" id="h-22" points="307,165 321,135 332,160"></polygon>
+  <!--body-->
+  <polygon class="body" id="b-1" points="322,162 332,160 285,212"></polygon>
+  <polygon class="body" id="b-2" points="277,216 307,165 317,163"></polygon>
+  <polygon class="body" id="b-3" points="209,52 321,135 277,111"></polygon>
+  <polygon class="body" id="b-4" points="218,79 321,135 318,142"></polygon>
+  <polygon class="body" id="b-5" points="218,79 318,142 307,165"></polygon>
+  <polygon class="body" id="b-6" points="280,193 277,136 307,165"></polygon>
+  <polygon class="body" id="b-7" points="259,166 277,136 280,193"></polygon>
+  <polygon class="body" id="b-8" points="191,164 218,79 277,136"></polygon>
+  <polygon class="body" id="b-9" points="191,164 277,136 259,166"></polygon>
+  <polygon class="body" id="b-10" points="191,164 259,166 280,193"></polygon>
+  <polygon class="body" id="b-11" points="55,117 218,79 191,164"></polygon>
+  <polygon class="body" id="b-12" points="138,71 218,79 178,89"></polygon>
+  <polygon class="body" id="b-13" points="154,59 218,79 189,76"></polygon>
+  <polygon class="body" id="b-14" points="136,145 280,193 265,204"></polygon>
+  <polygon class="body" id="b-15" points="244,218 249,197 265,204"></polygon>
+  <polygon class="body" id="b-16" points="200,195 247,208 244,218"></polygon>
+  <polygon class="body" id="b-17" points="200,195 249,197 247,208"></polygon>
+  <polygon class="body" id="b-18" points="200,195 232,189 249,197"></polygon>
+  <!--tail-->
+  <polygon class="tail" id="t-1" points="110,213 208,178 232,189"></polygon>
+  <polygon class="tail" id="t-2" points="110,213 182,166 208,178"></polygon>
+  <polygon class="tail" id="t-3" points="110,213 136,145 182,166"></polygon>
+  <polygon class="tail" id="t-4" points="91,200 136,145 110,213"></polygon>
+  <polygon class="tail" id="t-5" points="38,184 136,145 91,200"></polygon>
+  <polygon class="tail" id="t-6" points="6,245 91,200 110,213"></polygon>
+  <polygon class="tail" id="t-7" points="177,199 200,195 217,204"></polygon>
+  <polygon class="tail" id="t-8" points="69,284 177,199 217,204"></polygon>
+  <polygon class="tail" id="t-9" points="116,311 177,226 217,204"></polygon>
+  <polygon class="tail" id="t-10" points="181,257 217,204 232,212"></polygon>
+  <!--paws-->
+  <polygon class="paws" id="p-1" points="210,279 232,212 244,218"></polygon>
+  <polygon class="paws" id="p-2" points="210,279 244,218 219,279"></polygon>
+  <polygon class="paws" id="p-3" points="210,279 219,279 226,312"></polygon>
+   <polygon class="paws" id="p-4" points="244,218 256,210 258,219"></polygon>
+  <polygon class="paws" id="p-5" points="244,218 258,219 260,260"></polygon>
+  <polygon class="paws" id="p-6" points="260,260 258,219 269,258"></polygon>
+  <polygon class="paws" id="p-7" points="260,260 269,258 290,275"></polygon>
+  <!--stone-->
+  <polygon class="stone" id="s-1" points="174,420 199,341 226,323 209,373 217,441"></polygon>
+  <polygon class="stone" id="s-2" points="217,441 209,373 226,323 234,321 239,321 257,339 248,428"></polygon>
+  <polygon class="stone" id="s-3" points="248,428 257,339 239,321 245,323 262,339 285,423"></polygon>
+  <!--clutches-->
+  <polygon class="clutches" points="210,339 212,327 226,312 255,326 262,339 240,323 237,326 236,338 231,327 230,322 217,329"></polygon>
+  <polygon class="clutches" points="262,299 264,284 290,275 311,286 319,297 314,309 313,297 301,286 301,294 291,306 295,294 291,285 268,287"></polygon>
+
+  Sorry, your browser does not support SVG.
+</svg>

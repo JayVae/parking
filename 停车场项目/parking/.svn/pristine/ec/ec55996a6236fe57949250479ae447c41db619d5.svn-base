@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.UsercarMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Usercar" >
+    <id column="usercarid" property="usercarid" jdbcType="INTEGER" />
+    <result column="orduserid" property="orduserid" jdbcType="INTEGER" />
+    <result column="carnumber" property="carnumber" jdbcType="VARCHAR" />
+    <result column="cartype" property="cartype" jdbcType="VARCHAR" />
+    <result column="carmodels" property="carmodels" jdbcType="VARCHAR" />
+    <result column="licensepic" property="licensepic" jdbcType="VARCHAR" />
+    <result column="regtime" property="regtime" jdbcType="DATE" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    usercarid, orduserid, carnumber, cartype, carmodels, licensepic, regtime, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from usercar
+    where usercarid = #{usercarid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from usercar
+    where usercarid = #{usercarid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Usercar" >
+    insert into usercar (usercarid, orduserid, carnumber, 
+      cartype, carmodels, licensepic, 
+      regtime, state)
+    values (#{usercarid,jdbcType=INTEGER}, #{orduserid,jdbcType=INTEGER}, #{carnumber,jdbcType=VARCHAR}, 
+      #{cartype,jdbcType=VARCHAR}, #{carmodels,jdbcType=VARCHAR}, #{licensepic,jdbcType=VARCHAR}, 
+      #{regtime,jdbcType=DATE}, #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Usercar" >
+    insert into usercar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usercarid != null" >
+        usercarid,
+      </if>
+      <if test="orduserid != null" >
+        orduserid,
+      </if>
+      <if test="carnumber != null" >
+        carnumber,
+      </if>
+      <if test="cartype != null" >
+        cartype,
+      </if>
+      <if test="carmodels != null" >
+        carmodels,
+      </if>
+      <if test="licensepic != null" >
+        licensepic,
+      </if>
+      <if test="regtime != null" >
+        regtime,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usercarid != null" >
+        #{usercarid,jdbcType=INTEGER},
+      </if>
+      <if test="orduserid != null" >
+        #{orduserid,jdbcType=INTEGER},
+      </if>
+      <if test="carnumber != null" >
+        #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="carmodels != null" >
+        #{carmodels,jdbcType=VARCHAR},
+      </if>
+      <if test="licensepic != null" >
+        #{licensepic,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Usercar" >
+    update usercar
+    <set >
+      <if test="orduserid != null" >
+        orduserid = #{orduserid,jdbcType=INTEGER},
+      </if>
+      <if test="carnumber != null" >
+        carnumber = #{carnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cartype != null" >
+        cartype = #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="carmodels != null" >
+        carmodels = #{carmodels,jdbcType=VARCHAR},
+      </if>
+      <if test="licensepic != null" >
+        licensepic = #{licensepic,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        regtime = #{regtime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where usercarid = #{usercarid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Usercar" >
+    update usercar
+    set orduserid = #{orduserid,jdbcType=INTEGER},
+      carnumber = #{carnumber,jdbcType=VARCHAR},
+      cartype = #{cartype,jdbcType=VARCHAR},
+      carmodels = #{carmodels,jdbcType=VARCHAR},
+      licensepic = #{licensepic,jdbcType=VARCHAR},
+      regtime = #{regtime,jdbcType=DATE},
+      state = #{state,jdbcType=VARCHAR}
+    where usercarid = #{usercarid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from usercar
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from usercar
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from usercar
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from usercar
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from usercar
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

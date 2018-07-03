@@ -1,0 +1,61 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Parkingplaceftb implements Serializable {
+    private Integer parkingplaceftbid;
+
+    private Integer parkingplacefreetimeid;
+
+    private Date freetimebucketbegin;
+
+    private Date freetimebucketend;
+
+    private Double price;
+
+    private static final long serialVersionUID = 1L;
+
+    public Integer getParkingplaceftbid() {
+        return parkingplaceftbid;
+    }
+
+    public void setParkingplaceftbid(Integer parkingplaceftbid) {
+        this.parkingplaceftbid = parkingplaceftbid;
+    }
+
+    public Integer getParkingplacefreetimeid() {
+        return parkingplacefreetimeid;
+    }
+
+    public void setParkingplacefreetimeid(Integer parkingplacefreetimeid) {
+        this.parkingplacefreetimeid = parkingplacefreetimeid;
+    }
+
+    public Date getFreetimebucketbegin() {
+        return freetimebucketbegin;
+    }
+
+    public void setFreetimebucketbegin(Date freetimebucketbegin) {
+        this.freetimebucketbegin = freetimebucketbegin;
+    }
+
+    public Date getFreetimebucketend() {
+        return freetimebucketend;
+    }
+
+    public void setFreetimebucketend(Date freetimebucketend) {
+        this.freetimebucketend = freetimebucketend;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+}

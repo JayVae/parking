@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.parkingSpace.ParkinglotsliceMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkinglotslice" >
+    <id column="parkinglotsliceid" property="parkinglotsliceid" jdbcType="INTEGER" />
+    <result column="parkinglotid" property="parkinglotid" jdbcType="INTEGER" />
+    <result column="slicename" property="slicename" jdbcType="VARCHAR" />
+    <result column="slicemap" property="slicemap" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parkinglotsliceid, parkinglotid, slicename, slicemap, note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkinglotslice
+    where parkinglotsliceid = #{parkinglotsliceid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from parkinglotslice
+    where parkinglotsliceid = #{parkinglotsliceid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkinglotslice" >
+    insert into parkinglotslice (parkinglotsliceid, parkinglotid, 
+      slicename, slicemap, note
+      )
+    values (#{parkinglotsliceid,jdbcType=INTEGER}, #{parkinglotid,jdbcType=INTEGER}, 
+      #{slicename,jdbcType=VARCHAR}, #{slicemap,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkinglotslice" >
+    insert into parkinglotslice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkinglotsliceid != null" >
+        parkinglotsliceid,
+      </if>
+      <if test="parkinglotid != null" >
+        parkinglotid,
+      </if>
+      <if test="slicename != null" >
+        slicename,
+      </if>
+      <if test="slicemap != null" >
+        slicemap,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkinglotsliceid != null" >
+        #{parkinglotsliceid,jdbcType=INTEGER},
+      </if>
+      <if test="parkinglotid != null" >
+        #{parkinglotid,jdbcType=INTEGER},
+      </if>
+      <if test="slicename != null" >
+        #{slicename,jdbcType=VARCHAR},
+      </if>
+      <if test="slicemap != null" >
+        #{slicemap,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkinglotslice" >
+    update parkinglotslice
+    <set >
+      <if test="parkinglotid != null" >
+        parkinglotid = #{parkinglotid,jdbcType=INTEGER},
+      </if>
+      <if test="slicename != null" >
+        slicename = #{slicename,jdbcType=VARCHAR},
+      </if>
+      <if test="slicemap != null" >
+        slicemap = #{slicemap,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parkinglotsliceid = #{parkinglotsliceid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkinglotslice" >
+    update parkinglotslice
+    set parkinglotid = #{parkinglotid,jdbcType=INTEGER},
+      slicename = #{slicename,jdbcType=VARCHAR},
+      slicemap = #{slicemap,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR}
+    where parkinglotsliceid = #{parkinglotsliceid,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglotslice
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglotslice
+    <where>
+    	<if test="parkinglotid != null">
+    		and parkinglotid = #{parkinglotid, javaType=java.lang.String, jdbcType=INTEGER}
+    	</if>
+    	<if test="parkinglotids != null">
+    		and parkinglotid in
+    		<foreach collection="parkinglotids" index="index" item="item" open="(" separator="," close=")">
+            	#{item}
+        	</foreach>
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkinglotslice
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglotslice
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkinglotslice
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

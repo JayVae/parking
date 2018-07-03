@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.FreetimebucketMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Freetimebucket" >
+    <id column="freetimebucketid" property="freetimebucketid" jdbcType="BIGINT" />
+    <result column="freetimetmpid" property="freetimetmpid" jdbcType="BIGINT" />
+    <result column="freetimebucketbegin" property="freetimebucketbegin" jdbcType="TIME" />
+    <result column="freetimebucketend" property="freetimebucketend" jdbcType="TIME" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    freetimebucketid, freetimetmpid, freetimebucketbegin, freetimebucketend, price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from freetimebucket
+    where freetimebucketid = #{freetimebucketid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from freetimebucket
+    where freetimebucketid = #{freetimebucketid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Freetimebucket" >
+    insert into freetimebucket (freetimebucketid, freetimetmpid, freetimebucketbegin, 
+      freetimebucketend, price)
+    values (#{freetimebucketid,jdbcType=BIGINT}, #{freetimetmpid,jdbcType=BIGINT}, #{freetimebucketbegin,jdbcType=TIME}, 
+      #{freetimebucketend,jdbcType=TIME}, #{price,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Freetimebucket" >
+    insert into freetimebucket
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="freetimebucketid != null" >
+        freetimebucketid,
+      </if>
+      <if test="freetimetmpid != null" >
+        freetimetmpid,
+      </if>
+      <if test="freetimebucketbegin != null" >
+        freetimebucketbegin,
+      </if>
+      <if test="freetimebucketend != null" >
+        freetimebucketend,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="freetimebucketid != null" >
+        #{freetimebucketid,jdbcType=BIGINT},
+      </if>
+      <if test="freetimetmpid != null" >
+        #{freetimetmpid,jdbcType=BIGINT},
+      </if>
+      <if test="freetimebucketbegin != null" >
+        #{freetimebucketbegin,jdbcType=TIME},
+      </if>
+      <if test="freetimebucketend != null" >
+        #{freetimebucketend,jdbcType=TIME},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Freetimebucket" >
+    update freetimebucket
+    <set >
+      <if test="freetimetmpid != null" >
+        freetimetmpid = #{freetimetmpid,jdbcType=BIGINT},
+      </if>
+      <if test="freetimebucketbegin != null" >
+        freetimebucketbegin = #{freetimebucketbegin,jdbcType=TIME},
+      </if>
+      <if test="freetimebucketend != null" >
+        freetimebucketend = #{freetimebucketend,jdbcType=TIME},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where freetimebucketid = #{freetimebucketid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Freetimebucket" >
+    update freetimebucket
+    set freetimetmpid = #{freetimetmpid,jdbcType=BIGINT},
+      freetimebucketbegin = #{freetimebucketbegin,jdbcType=TIME},
+      freetimebucketend = #{freetimebucketend,jdbcType=TIME},
+      price = #{price,jdbcType=DOUBLE}
+    where freetimebucketid = #{freetimebucketid,jdbcType=BIGINT}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimebucket
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimebucket
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from freetimebucket
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from freetimebucket
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from freetimebucket
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+</mapper>

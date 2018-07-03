@@ -1,0 +1,72 @@
+package com.hu.parking.entity;
+
+import java.io.Serializable;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Freetimebuckettmp implements Serializable {
+    private Long freetimebuckettmpid;
+
+    private Integer orduserid;
+
+    private String name;
+
+    private Double totalhour;
+
+    private String isvalid;
+    
+    private String realname;
+
+    private static final long serialVersionUID = 1L;
+
+    public Long getFreetimebuckettmpid() {
+        return freetimebuckettmpid;
+    }
+
+    public void setFreetimebuckettmpid(Long freetimebuckettmpid) {
+        this.freetimebuckettmpid = freetimebuckettmpid;
+    }
+
+    public Integer getOrduserid() {
+        return orduserid;
+    }
+
+    public void setOrduserid(Integer orduserid) {
+        this.orduserid = orduserid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Double getTotalhour() {
+        return totalhour;
+    }
+
+    public void setTotalhour(Double totalhour) {
+        this.totalhour = totalhour;
+    }
+
+    public String getIsvalid() {
+        return isvalid;
+    }
+
+    public void setIsvalid(String isvalid) {
+        this.isvalid = isvalid == null ? null : isvalid.trim();
+    }
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
+    
+    
+}

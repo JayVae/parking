@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hu.parking.dao.parkingSpace.ParkinglotMapper" >
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Parkinglot" >
+    <id column="parkinglotid" property="parkinglotid" jdbcType="OTHER" />
+    <result column="propertycompanyid" property="propertycompanyid" jdbcType="OTHER" />
+    <result column="parkinglotname" property="parkinglotname" jdbcType="VARCHAR" />
+    <result column="parkinglotaddress" property="parkinglotaddress" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="NUMERIC" />
+    <result column="latitude" property="latitude" jdbcType="NUMERIC" />
+    <result column="parkingplacenum" property="parkingplacenum" jdbcType="INTEGER" />
+    <result column="freeparkingplacenum" property="freeparkingplacenum" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="parkinglot_rmap" type="com.hu.parking.entity.Parkinglot" >
+    <id column="parkinglotid" property="parkinglotid" jdbcType="OTHER" />
+    <result column="propertycompanyid" property="propertycompanyid" jdbcType="OTHER" />
+    <result column="parkinglotname" property="parkinglotname" jdbcType="VARCHAR" />
+    <result column="parkinglotaddress" property="parkinglotaddress" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="NUMERIC" />
+    <result column="latitude" property="latitude" jdbcType="NUMERIC" />
+    <result column="parkingplacenum" property="parkingplacenum" jdbcType="INTEGER" />
+    <result column="freeparkingplacenum" property="freeparkingplacenum" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <collection property="parkinglotsliceList" ofType="parkinglotslice" resultMap="parkinglotslice_rmap" columnPrefix="ps_" />
+    <collection property="parkingplaceList" ofType="parkingplace" resultMap="parkingplace_rmap" columnPrefix="pp_" />
+    <collection property="parkingplaceftbList" ofType="parkingplaceftb" resultMap="parkingplaceftb_rmap" columnPrefix="pt_" />
+    <collection property="parkingplacefreetimeList" ofType="parkingplacefreetime" resultMap="parkingplacefreetime_rmap" columnPrefix="pf_" />
+  </resultMap>
+  
+  <resultMap id="parkinglotslice_rmap" type="com.hu.parking.entity.Parkinglotslice" >
+    <id column="parkinglotsliceid" property="parkinglotsliceid" jdbcType="OTHER" />
+    <result column="parkinglotid" property="parkinglotid" jdbcType="INTEGER" />
+    <result column="slicename" property="slicename" jdbcType="VARCHAR" />
+    <result column="slicemap" property="slicemap" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  <resultMap id="parkingplace_rmap" type="com.hu.parking.entity.Parkingplace" >
+    <id column="parkingplaceid" property="parkingplaceid" jdbcType="OTHER" />
+    <result column="parkinglotsliceid" property="parkinglotsliceid" jdbcType="OTHER" />
+    <result column="orduserid" property="orduserid" jdbcType="OTHER" />
+    <result column="regtime" property="regtime" jdbcType="DATE" />
+    <result column="usestate" property="usestate" jdbcType="VARCHAR" />
+    <result column="positionofmap" property="positionofmap" jdbcType="VARCHAR" />
+    <result column="parkingplaceno" property="parkingplaceno" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="parkingplacefreetime_rmap" type="com.hu.parking.entity.Parkingplacefreetime" >
+    <id column="parkingplacefreetimeid" property="parkingplacefreetimeid" jdbcType="OTHER" />
+    <result column="parkingplaceid" property="parkingplaceid" jdbcType="OTHER" />
+    <result column="freedate" property="freedate" jdbcType="DATE" />
+    <result column="totalhour" property="totalhour" jdbcType="DOUBLE" />
+    <result column="usestate" property="usestate" jdbcType="VARCHAR" />
+    <result column="isvalid" property="isvalid" jdbcType="VARCHAR" />
+    <result column="isused" property="isused" jdbcType="VARCHAR" />
+    <result column="timeoutscale" property="timeoutscale" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <resultMap id="parkingplaceftb_rmap" type="com.hu.parking.entity.Parkingplaceftb" >
+    <id column="parkingplaceftbid" property="parkingplaceftbid" jdbcType="OTHER" />
+    <result column="parkingplacefreetimeid" property="parkingplacefreetimeid" jdbcType="OTHER" />
+    <result column="freetimebucketbegin" property="freetimebucketbegin" jdbcType="TIME" />
+    <result column="freetimebucketend" property="freetimebucketend" jdbcType="TIME" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="All_Column_List">
+  	pl.parkinglotid, pl.propertycompanyid, pl.parkinglotname, pl.parkinglotaddress, pl.longitude, pl.latitude, pl.parkingplacenum, 
+    pl.freeparkingplacenum, pl.note, pl.state,
+    ps.parkinglotsliceid as  ps_parkinglotsliceid, ps.parkinglotid as  ps_parkinglotid,
+    ps.slicename as  ps_slicename, ps.slicemap as  ps_slicemap, ps.note as ps_note,
+    pp.parkingplaceid as pp_parkingplaceid, pp.parkinglotsliceid as pp_parkinglotsliceid, pp.orduserid as pp_orduserid,
+    pp.regtime as pp_regtime, pp.usestate as pp_usestate, pp.positionofmap as pp_positionofmap, pp.parkingplaceno as pp_parkingplaceno,
+    pf.parkingplacefreetimeid as pf_parkingplacefreetimeid, pf.parkingplaceid as pf_parkingplaceid, pf.freedate as pf_freedate,
+    pf.totalhour as pf_totalhour, pf.usestate as pf_usestate, pf.isvalid as pf_isvalid, pf.isused as pf_isused,pf.timeoutscale as pf_timeoutscale,
+    pt.parkingplaceftbid as pt_parkingplaceftbid, pt.parkingplacefreetimeid as pt_parkingplacefreetimeid,
+    pt.freetimebucketbegin as pt_freetimebucketbegin, pt.freetimebucketend as pt_freetimebucketend, pt.price as pt_price
+  </sql>
+  <sql id="Base_Column_List" >
+    parkinglotid, propertycompanyid, parkinglotname, parkinglotaddress, longitude, latitude, parkingplacenum, 
+    freeparkingplacenum, note, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from parkinglot
+    where parkinglotid = #{parkinglotid,jdbcType=OTHER, javaType=java.lang.String}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from parkinglot
+    where parkinglotid = #{parkinglotid,jdbcType=OTHER, javaType=java.lang.String}
+  </delete>
+  <insert id="insert" parameterType="com.hu.parking.entity.Parkinglot" >
+    insert into parkinglot (parkinglotid, propertycompanyid, 
+      parkinglotname, parkinglotaddress, longitude, latitude, 
+      parkingplacenum, freeparkingplacenum, note, 
+      state)
+    values (#{parkinglotid,jdbcType=OTHER, javaType=java.lang.String}, #{propertycompanyid,jdbcType=OTHER, javaType=java.lang.String}, 
+      #{parkinglotname,jdbcType=VARCHAR}, #{parkinglotaddress,jdbcType=VARCHAR}, #{longitude,jdbcType=NUMERIC}, #{latitude,jdbcType=NUMERIC}, 
+      #{parkingplacenum,jdbcType=INTEGER}, #{freeparkingplacenum,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Parkinglot" >
+    insert into parkinglot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkinglotid != null" >
+        parkinglotid,
+      </if>
+      <if test="propertycompanyid != null" >
+        propertycompanyid,
+      </if>
+      <if test="parkinglotname != null" >
+        parkinglotname,
+      </if>
+      <if test="parkinglotaddress != null" >
+        parkinglotaddress,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="parkingplacenum != null" >
+        parkingplacenum,
+      </if>
+      <if test="freeparkingplacenum != null" >
+        freeparkingplacenum,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkinglotid != null" >
+        #{parkinglotid,jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="propertycompanyid != null" >
+        #{propertycompanyid,jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkinglotname != null" >
+        #{parkinglotname,jdbcType=VARCHAR},
+      </if>
+      <if test="parkinglotaddress != null" >
+        #{parkinglotaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=NUMERIC},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=NUMERIC},
+      </if>
+      <if test="parkingplacenum != null" >
+        #{parkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="freeparkingplacenum != null" >
+        #{freeparkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Parkinglot" >
+    update parkinglot
+    <set >
+      <if test="propertycompanyid != null" >
+        propertycompanyid = #{propertycompanyid,jdbcType=OTHER, javaType=java.lang.String},
+      </if>
+      <if test="parkinglotname != null" >
+        parkinglotname = #{parkinglotname,jdbcType=VARCHAR},
+      </if>
+      <if test="parkinglotaddress != null" >
+        parkinglotaddress = #{parkinglotaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=NUMERIC},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=NUMERIC},
+      </if>
+      <if test="parkingplacenum != null" >
+        parkingplacenum = #{parkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="freeparkingplacenum != null" >
+        freeparkingplacenum = #{freeparkingplacenum,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where parkinglotid = #{parkinglotid,jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Parkinglot" >
+    update parkinglot
+    set propertycompanyid = #{propertycompanyid,jdbcType=OTHER, javaType=java.lang.String},
+      parkinglotname = #{parkinglotname,jdbcType=VARCHAR},
+      parkinglotaddress = #{parkinglotaddress,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=NUMERIC},
+      latitude = #{latitude,jdbcType=NUMERIC},
+      parkingplacenum = #{parkingplacenum,jdbcType=INTEGER},
+      freeparkingplacenum = #{freeparkingplacenum,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR}
+    where parkinglotid = #{parkinglotid,jdbcType=OTHER, javaType=java.lang.String}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    <where>
+    	<if test="longitudeMax != null">
+    		<![CDATA[longitude <= #{longitudeMax} and longitude >= #{longitudeMin}
+    		and latitude <= #{latitudeMax} and latitude >= #{latitudeMin} ]]>
+    	</if>
+    	<if test="parkingLotName != null">
+    		and parkinglotname like '%'||#{parkingLotName}||'%'
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+  <select id="findByParamsCount" resultType="int" parameterType="map" >
+    select count(*) from parkinglot
+  </select>
+  <select id="findByKey" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from parkinglot
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue ,jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+  <select id="findByKeyCount" resultType="int" parameterType="map" >
+    select count(*) from parkinglot
+    <where >
+      <if test="ckey != null and cvalue != null" >
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null" >
+        and ${pkey} != #{pvalue ,jdbcType=OTHER, javaType=java.lang.String}
+      </if>
+    </where>
+  </select>
+  
+  <select id="findParkingplaceft" resultMap="parkinglot_rmap" parameterType="map" >
+    SELECT 
+    <include refid="All_Column_List" />
+     	FROM parkingplacefreetime as pf 
+		INNER JOIN parkingplace as pp on pf.parkingplaceid = pp.parkingplaceid
+		INNER JOIN parkinglotslice as ps on pp.parkinglotsliceid = ps.parkinglotsliceid
+		INNER JOIN parkinglot as pl on ps.parkinglotid = pl.parkinglotid
+		INNER JOIN parkingplaceftb as pt on pt.parkingplacefreetimeid = pf.parkingplacefreetimeid
+    <where>
+    	<if test="parkinglotid != null">
+    		and  pl.parkinglotid = #{parkinglotid, jdbcType=OTHER, javaType=java.lang.String}
+    	</if>
+    	<if test="freedate != null">
+    		and freedate = #{freedate}
+    	</if>
+    	<if test="useState != null">
+    		and pp.useState = #{useState}
+    	</if>
+    </where>
+    <if test="sortName != null" >
+      order by ${sortName}
+      <if test="sortOrder != null" >
+        ${sortOrder}
+      </if>
+    </if>
+    <if test="pageSize != null and startNum != null" >
+      limit #{pageSize} offset #{startNum}
+    </if>
+  </select>
+</mapper>

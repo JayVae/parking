@@ -1,0 +1,12 @@
+package com.hu.parking.service.parkingSpace;
+
+import java.util.List;
+import java.util.Map;
+
+import com.hu.parking.entity.Parkinglot;
+import com.hu.parking.service.base.BaseService;
+
+public interface ParkinglotService extends BaseService<Parkinglot> {
+	public List<Parkinglot> findParkingplaceft(Map<String, Object> params);
+	
+}

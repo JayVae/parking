@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Freetimebucket;
+
+public interface FreetimebucketMapper {
+    int deleteByPrimaryKey(Long freetimebucketid);
+
+    int insert(Freetimebucket record);
+
+    int insertSelective(Freetimebucket record);
+
+    Freetimebucket selectByPrimaryKey(Long freetimebucketid);
+
+    int updateByPrimaryKeySelective(Freetimebucket record);
+
+    int updateByPrimaryKey(Freetimebucket record);
+}

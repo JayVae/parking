@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hu.parking.dao.system.PermissionsMapper">
+  <resultMap id="BaseResultMap" type="com.hu.parking.entity.Permissions">
+    <id column="permissionsid" jdbcType="VARCHAR" property="permissionsid" />
+    <result column="parentid" jdbcType="VARCHAR" property="parentid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="permstr" jdbcType="VARCHAR" property="permstr" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="ordernum" jdbcType="INTEGER" property="ordernum" />
+    <result column="icncls" jdbcType="VARCHAR" property="icncls" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="usablestate" jdbcType="VARCHAR" property="usablestate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permissionsid, parentid, title, permstr, url, ordernum, icncls, type, notes, level, 
+    usablestate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_permissions
+    where permissionsid = #{permissionsid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_permissions
+    where permissionsid = #{permissionsid,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByKey" parameterType="map">
+    delete from t_permissions
+    where ${key} = #{value}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hu.parking.entity.Permissions">
+    insert into t_permissions (permissionsid, parentid, title, 
+      permstr, url, ordernum, 
+      icncls, type, notes, 
+      level, usablestate)
+    values (#{permissionsid,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{permstr,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{ordernum,jdbcType=INTEGER}, 
+      #{icncls,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{usablestate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hu.parking.entity.Permissions">
+    insert into t_permissions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionsid != null">
+        permissionsid,
+      </if>
+      <if test="parentid != null">
+        parentid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="permstr != null">
+        permstr,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="ordernum != null">
+        ordernum,
+      </if>
+      <if test="icncls != null">
+        icncls,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="usablestate != null">
+        usablestate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionsid != null">
+        #{permissionsid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="permstr != null">
+        #{permstr,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="ordernum != null">
+        #{ordernum,jdbcType=INTEGER},
+      </if>
+      <if test="icncls != null">
+        #{icncls,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="usablestate != null">
+        #{usablestate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hu.parking.entity.Permissions">
+    update t_permissions
+    <set>
+      <if test="parentid != null">
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="permstr != null">
+        permstr = #{permstr,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="ordernum != null">
+        ordernum = #{ordernum,jdbcType=INTEGER},
+      </if>
+      <if test="icncls != null">
+        icncls = #{icncls,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="usablestate != null">
+        usablestate = #{usablestate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where permissionsid = #{permissionsid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hu.parking.entity.Permissions">
+    update t_permissions
+    set parentid = #{parentid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      permstr = #{permstr,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      ordernum = #{ordernum,jdbcType=INTEGER},
+      icncls = #{icncls,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      usablestate = #{usablestate,jdbcType=VARCHAR}
+    where permissionsid = #{permissionsid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_permissions
+    <if test="sortName != null">
+      order by ${sortName}
+      <if test="sortOrder != null">
+        ${sortOrder}
+      </if>
+    </if>
+  </select>
+  
+  <select id="findByParams" parameterType="map" resultMap="BaseResultMap">       
+        SELECT 
+        <include refid="Base_Column_List" />
+         FROM t_permissions
+         <where>
+         	<if test="type != null">
+         		and type=#{type}
+         	</if>
+         	<if test="level != null">
+         		 <![CDATA[and level<=#{level}]]>
+         	</if>
+         </where>
+  </select>
+  
+  <select id="findByParamsCount" parameterType="map" resultType="int">
+    select count(*) from t_permissions
+  </select>
+  
+  <select id="findByKey" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_permissions
+    <where>
+      <if test="ckey != null and cvalue != null">
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null">
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  
+  <select id="findByKeyCount" parameterType="map" resultType="int">
+    select count(*) from t_permissions
+    <where>
+      <if test="ckey != null and cvalue != null">
+        and ${ckey} = #{cvalue}
+      </if>
+      <if test="pkey != null and pvalue != null">
+        and ${pkey} != #{pvalue}
+      </if>
+    </where>
+  </select>
+  
+  <select id="findByRole" parameterType="map" resultMap="BaseResultMap">
+    select
+    p.permissionsid, p.parentid, p.title, p.permstr, p.url, p.ordernum, p.icncls, p.type, p.notes, p.level, p.usablestate 
+    from t_permissions as p inner join t_roleperm as rp on p.permissionsid = rp.permissionsid
+    inner join t_role as r on r.roleid = rp.roleid
+    <where>
+      <if test="roleid != null">
+        and r.roleid = #{roleid}
+      </if>
+    </where>
+  </select>
+</mapper>

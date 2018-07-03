@@ -1,0 +1,17 @@
+package com.hu.parking.dao;
+
+import com.hu.parking.entity.Sysuser;
+
+public interface SysuserMapper {
+    int deleteByPrimaryKey(Integer sysuserid);
+
+    int insert(Sysuser record);
+
+    int insertSelective(Sysuser record);
+
+    Sysuser selectByPrimaryKey(Integer sysuserid);
+
+    int updateByPrimaryKeySelective(Sysuser record);
+
+    int updateByPrimaryKey(Sysuser record);
+}

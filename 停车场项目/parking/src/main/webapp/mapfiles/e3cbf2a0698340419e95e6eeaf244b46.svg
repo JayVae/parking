@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg id="svg" width="800" height="600" >
+<script>
+<![CDATA[
+//----------------draw circle---------------------
+var xCenter;
+var yCenter;
+var rCircle
+var circleFlag=0;
+var codeCircle;
+var sd=document.getElementById("SD");
+   function drawCircle(){
+
+     var newCircle=document.createElement("circle");
+     xCenter=evt.getClientX();
+     yCenter=evt.getClientY();
+     newCircle.setAttribute("cx",xCenter);
+     newCircle.setAttribute("cy",yCenter);
+     newCircle.setAttribute("r",0);
+     newCircle.setAttribute("stroke","red");
+     newCircle.setAttribute("stroke-width","1");
+     newCircle.setAttribute("fill","blue");
+     var plat=document.getElementById("plat");
+     plat.appendChild(newCircle);
+     circleFlag=1
+    }
+    function modifyCircle(){
+    if(circleFlag==1){
+var plat=document.getElementById("plat");
+var theCircle=plat.lastChild;
+var screenX =evt.getClientX();
+var screenY =evt.getClientY();
+x=screenX-xCenter;
+y=screenY-yCenter;
+rCircle= parseInt(Math.sqrt(x*x+y*y));
+theCircle.setAttribute("r",rCircle);
+}
+    }
+function endCircle(){
+codeCircle="<circle cx=\""+xCenter+"\" cy=\""+yCenter+"\" r=\""+rCircle+"\"   stroke=\"red\" stroke-width=\"1\" fill=\"blue\" />";
+codeAll=codeAll+codeCircle;
+circleFlag=0;
+var plat=document.getElementById("plat");
+theCircle=plat.lastChild;
+plat.appendChild(theCircle);
+sd.firstChild.setData(codeCircle);
+    }
+//-----------------draw rect----------------------
+var xRectStart;
+var yRectStart;
+var rectFlag=0;
+var codeRect;
+var widthRect;
+var heightRect;
+var sd=document.getElementById("SD");
+   function drawRect(){
+     var newRect=document.createElement("rect");
+     xRectStart=evt.getClientX();
+     yRectStart=evt.getClientY();
+     newRect.setAttribute("x",xRectStart);
+     newRect.setAttribute("y",yRectStart);
+     newRect.setAttribute("width",0);
+     newRect.setAttribute("height",0);
+     newRect.setAttribute("stroke","red");
+     newRect.setAttribute("stroke-width","1");
+     newRect.setAttribute("fill","blue");
+     var plat=document.getElementById("plat");
+     plat.appendChild(newRect);
+     rectFlag=1
+    }
+    function modifyRect(){
+    if(rectFlag==1){
+var plat=document.getElementById("plat");
+var theCircle=plat.lastChild;
+var screenX =evt.getClientX();
+var screenY =evt.getClientY();
+widthRect=screenX-xRectStart;
+heightRect=screenY-yRectStart;
+theCircle.setAttribute("width",widthRect);
+theCircle.setAttribute("height",heightRect);
+}
+    }
+   function endRect(){
+codeRect="<rect x=\""+xRectStart+"\" y=\""+yRectStart+"\" width=\""+widthRect+"\" height=\""+heightRect+"\" stroke=\"red\" stroke-width=\"1\" fill=\"blue\" />";
+codeAll=codeAll+codeRect;
+rectFlag=0;
+var plat=document.getElementById("plat");
+theRect=plat.lastChild;
+plat.appendChild(theRect);
+sd.firstChild.setData(codeRect);
+    }
+//---------------------draw with Image---------
+var xImageScreen;
+var yImageScreen;
+var plat;
+var switchScr="12.jpg";
+var imageFlag;
+var codeImage;
+var sd=document.getElementById("SD");
+function startImage(){
+plat=document.getElementById("plat");
+var newImg=document.createElement("image");
+xImageScreen=evt.getClientX();
+yImageScreen=evt.getClientY();
+newImg.setAttribute("x",xImageScreen);
+newImg.setAttribute("y",yImageScreen);
+newImg.setAttribute("width","60");
+newImg.setAttribute("height","60");
+newImg.setAttributeNS("http://www.w3.org/2000/xlink/namespace/","xlink:href",switchScr);
+plat.appendChild(newImg);
+imageFlag=true;
+}
+function modifyImage(){
+if(imageFlag==true){
+theImg=plat.lastChild;
+xImageScreen=evt.getClientX();
+yImageScreen=evt.getClientY();
+theImg.setAttribute("x",xImageScreen);
+theImg.setAttribute("y",yImageScreen);
+}
+}
+
+function endImage(){
+codeImage="<image x=\""+xImageScreen+"\" y=\""+yImageScreen+"\" width=\"60\" height=\"60\" xlink:href=\""+switchScr+"\"/>";
+codeAll=codeAll+codeImage;
+theImg=plat.lastChild;
+plat.appendChild(theImg);
+imageFlag=false;
+sd.firstChild.setData(codeImage);
+}
+//---------------------drawLine()----------------------
+var xLineEnd=0;
+var yLineEnd=60;
+var xLineStart;
+var yLineStart;
+var lineFlag=false;
+var codeLine;
+var sd=document.getElementById("SD");
+   function drawLine(){
+    var newLine=document.createElement("line");
+     xLineStart=evt.getClientX();
+     yLineStart=evt.getClientY();
+     newLine.setAttribute("x1",xLineStart);
+     newLine.setAttribute("y1",yLineStart);
+     newLine.setAttribute("x2",xLineEnd);
+     newLine.setAttribute("y2",yLineEnd);
+     newLine.setAttribute("stroke","red");
+     newLine.setAttribute("stroke-width","2");
+     var plat=document.getElementById("plat");
+     plat.appendChild(newLine);
+     lineFlag=true;
+    }
+   function modifyLine(){
+    if(lineFlag==true){
+     var plat=document.getElementById("plat");
+var theLine=plat.lastChild;
+xLineEnd =evt.getClientX();
+yLineEnd =evt.getClientY();
+theLine.setAttribute("x2",xLineEnd);
+   theLine.setAttribute("y2",yLineEnd);
+     }
+   }
+   function endLine(){
+   codeLine="<line x1=\""+xLineStart+"\" y1=\""+yLineStart+"\" x2=\""+xLineEnd+"\" y2=\""+yLineEnd+"\" stroke=\"red\" stroke-width=\"2\" />";
+    codeAll=codeAll+codeLine;
+    lineFlag=false;
+     var plat=document.getElementById("plat");
+     theLine=plat.lastChild;
+     plat.appendChild(theLine);
+     xLineEnd=0;
+     yLineEnd=60;
+    sd.firstChild.setData(codeLine);
+   }
+//----------------drag images----------------------
+
+var targetMaxtrix;
+var dragTarget;
+var dragStartX;
+var dragStartY;
+var dragFlag=false;
+var backRect=document.getElementById("backRect");
+
+function startDrag(){
+dragTarget=evt.target;
+if(dragTarget!=backRect){
+dragStartX=evt.getClientX();
+dragStartY=evt.getClientY();
+targetMaxtrix=dragTarget.getCTM();
+dragFlag=true;
+}
+}
+
+function modifyDrag(){
+if(dragFlag){
+dragModifyX=evt.getClientX();
+dragModifyY=evt.getClientY();
+distanceX=dragModifyX-dragStartX;
+distanceY=dragModifyY-dragStartY;
+newTranX=targetMaxtrix.e+distanceX;
+newTranY=targetMaxtrix.f+distanceY;
+dragTarget.setAttributeNS(null, 'transform', 'translate(' + newTranX + ',' + newTranY + ')');
+}
+}
+
+function endDrag(){
+if(dragFlag){
+dragFlag=false;
+dragTarget.parentNode.appendChild(dragTarget);
+}
+}
+//---------------------common function---
+
+function getActiveId(){
+var id=0;
+for(i=0;i<toolStatus.length;i++){
+   if(toolStatus[i]==1){
+    id=i;
+    break;
+   }
+}
+return id;
+}
+function newFile(){
+var p=document.getElementById("plat");
+var l=p.childNodes.length;
+while(l!=3){
+p.removeChild(p.lastChild);
+l=p.childNodes.length;
+}
+codeAll="<?xml version=\"1.0\" encoding=\"utf-8\"?> <svg width=\"100%\" height=\"100%\">";
+}
+//-------------------operate files----------------------------------
+function saveFile(){
+codeAll=codeAll+codeEnd
+//---------save file --------
+var fso, f1; 
+fso = new ActiveXObject("Scripting.FileSystemObject"); 
+f1 = fso.CreateTextFile(fileName, true);  
+f1.WriteLine(codeAll); 
+f1.Close(); 
+alert("the location of the file : "+fileName);
+//--------------------
+codeAll=codeAll.substring(0,codeAll.length-6);
+}
+
+//--#############################common vars########################
+//-----------file vars-----------------------
+var codeAll="<?xml version=\"1.0\" encoding=\"utf-8\"?> <svg width=\"100%\" height=\"100%\">";
+var codeEnd="</svg>";
+var fileName="c:\\test.svg";
+
+//-------------------mainDraw-----------------
+function startDraw(){
+id=getActiveId();
+switch(id){
+case 0 :{startDrag();break;}
+case 1 :{ drawRect();break;}
+case 2 :{ drawCircle();break;}
+case 3 :{ drawLine();break;}
+case 4 :{ startImage();break;}
+}
+
+}
+
+function modifyDraw(){
+      id=getActiveId();
+      switch(id){
+         case 0 :{modifyDrag();break;}
+case 1 :{ modifyRect();break;}
+case 2 :{ modifyCircle();break;}
+case 3 :{ modifyLine();break;}
+case 4 :{ modifyImage();break;}
+}
+     
+    
+}
+
+function endDraw(){
+      id=getActiveId();
+      switch(id){
+case 0 :{endDrag();break;}
+         case 1 :{ endRect();break;}
+case 2 :{ endCircle();break;}
+case 3 :{ endLine();break;}
+case 4 :{ endImage();break;}
+}
+    
+     
+}
+//---------------------------------------
+//-------------------------changStatus And hiddenTool----------
+var toolStatus=new Array(1,0,0,0,0);
+var toolName=new Array('move','rect','circle','line','switch');
+function changeStatus(name){
+var id=0;
+for(i=0;i<toolName.length;i++){
+if(name==toolName[i]){
+   id=i;
+   break;
+}
+}
+for(i=0;i<toolStatus.length;i++){
+if(id==i){
+toolStatus[i]=1;
+}else{
+toolStatus[i]=0;
+}
+}
+showHidden1(id);
+}
+
+function showHidden1(id){
+if(toolStatus[id]==1){
+theMove=document.getElementById(id);
+theMove.setAttribute("display", "inline");
+setTimeout('showHidden2('+id+')',500);
+}else{
+theMove=document.getElementById(id);
+theMove.setAttribute("display", "inline");
+}
+}
+
+function showHidden2(id){
+if(toolStatus[id]==1){
+theMove=document.getElementById(id);
+theMove.setAttribute("display", "none");
+setTimeout('showHidden1('+id+')',500);
+}else{
+theMove=document.getElementById(id);
+theMove.setAttribute("display", "inline");
+}
+}
+
+]]>
+</script>
+
+<g id="plat"   onmousedown="startDraw()" onmousemove="modifyDraw()" onmouseup="endDraw()">
+<rect id="backRect" x="0" y="60" width="720" height="450" fill="white"
+      stroke="gray" stroke-width="1"/>
+</g>
+<g id="saveFlie" onclick="saveFile()">
+   <rect   x="498" y="527" width="45" height="25" stroke="black" stroke-width="1" fill="white"/>
+   <text   x="500" y="545" style="stroke:#83C75D;font-size:20">save</text>
+</g>
+<g id="newFie" onclick="newFile()">
+   <rect   x="578" y="527" width="45" height="25" stroke="black" stroke-width="1" fill="white"/>
+   <text   x="584" y="545" style="stroke:#83C75D;font-size:20"> new</text>
+</g>
+<text id="SD" fill="#FFFFFF" stroke="black" x="1" y="40">show code</text>
+<polyline id="0" points="40,546 50,563 42,557 38,566 40,546"
+      stroke="#426EB4" fill="blue" onclick="changeStatus('move')"/>
+   <rect id="1" x="70" y="544.5" width="25" height="20" stroke="#426EB4"
+      fill="blue" onclick="changeStatus('rect')"/>
+<circle id="2" cx="130" cy="555.5" r="12" stroke="#426EB4"
+      fill="blue" onclick="changeStatus('circle')"/>
+<polyline id="3" points="183,559 190,543 194,546 187,562 182.5,565.5 183,559 187,562" 
+      stroke="#555555" fill="blue" onclick="changeStatus('line')"/>
+<image id="4" x="220" y="535" width="40" height="40"
+xlink:href="12.jpg" onclick="changeStatus('switch')"/>
+</svg>
