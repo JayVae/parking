@@ -16,9 +16,9 @@
 		<quartz.version>2.2.1</quartz.version>
 		<ehcache.version>2.6.9</ehcache.version>
 		<spymemcached.version>2.11.2</spymemcached.version>
-		<shiro.version>1.2.4</shiro.version>
+		<shiro.version>3.0.0</shiro.version>
 		<hibernate-validator.version>5.0.3.Final</hibernate-validator.version>
-		<jackson.version>2.4.3</jackson.version>
+		<jackson.version>2.18.11</jackson.version>
 		<aspectj.version>1.7.4</aspectj.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<logback.version>1.1.2</logback.version>
